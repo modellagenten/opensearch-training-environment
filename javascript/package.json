@@ -1,0 +1,36 @@
+{
+  "name": "elasticsearch-opensearch-training",
+  "version": "1.0.0",
+  "description": "JavaScript Schulungsumgebung für Elasticsearch und OpenSearch (Windows, Linux, macOS)",
+  "main": "src/test-elasticsearch.js",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test:elasticsearch": "node src/test-elasticsearch.js",
+    "test:opensearch": "node src/test-opensearch.js",
+    "install:deps": "npm install",
+    "start": "npm run test:elasticsearch"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^9.1.1",
+    "@opensearch-project/opensearch": "^3.5.1",
+    "dotenv": "^16.4.5",
+    "axios": "^1.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "keywords": [
+    "elasticsearch",
+    "opensearch",
+    "javascript",
+    "nodejs",
+    "training",
+    "schulung"
+  ],
+  "author": "Training Team",
+  "license": "MIT"
+}
+

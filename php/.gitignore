@@ -1,0 +1,43 @@
+# Composer
+install/vendor/
+install/composer.lock
+vendor/
+composer.lock
+composer.phar
+
+# Environment files
+env/.env
+.env
+.env.local
+.env.*.local
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# PHPStorm
+.phpunit.result.cache
+
+# Logs
+logs/
+*.log
+
+# PHP
+*.cache
+
+# Build/Dist
+dist/
+build/
+out/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+

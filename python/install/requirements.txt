@@ -1,0 +1,10 @@
+# Elasticsearch/OpenSearch Python Client Libraries
+elasticsearch==9.1.1
+opensearch-py==2.5.0
+
+# Environment Variables Management
+python-dotenv==1.1.1
+
+# HTTP Requests
+requests==2.31.0
+urllib3==1.26.18

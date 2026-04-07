@@ -1,0 +1,32 @@
+{
+    "name": "elasticsearch-dev-training/php-windows",
+    "description": "PHP Schulungsumgebung für Elasticsearch und OpenSearch (Windows, Linux, macOS)",
+    "type": "project",
+    "require": {
+        "php": ">=8.4",
+        "elasticsearch/elasticsearch": "^8.0",
+        "vlucas/phpdotenv": "^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ElasticsearchTraining\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "php src/test_elasticsearch.php && php src/test_opensearch.php",
+        "test-es": "php src/test_elasticsearch.php",
+        "test-os": "php src/test_opensearch.php"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

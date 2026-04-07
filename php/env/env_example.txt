@@ -1,0 +1,24 @@
+# Elasticsearch Konfiguration
+ES_HOST=https://localhost:9200
+ES_USER=elastic
+ES_PASSWORD=changeme
+ES_VERIFY_CERTS=false
+
+# OpenSearch Konfiguration
+OS_HOST=https://localhost:9200
+OS_USER=admin
+OS_PASSWORD=changeme
+OS_VERIFY_CERTS=false
+
+# Docker Compose Umgebungsvariablen
+STACK_VERSION=8.11.0
+CLUSTER_NAME=docker-cluster
+ELASTIC_PASSWORD=changeme
+KIBANA_PASSWORD=changeme
+ES_PORT=9200
+KIBANA_PORT=5601
+LICENSE=basic
+MEM_LIMIT=4g
+
+# OpenSearch Docker Compose
+OPENSEARCH_PASSWORD=changeme
