@@ -75,7 +75,7 @@ services:
       - ./data/load-data.sh:/load-data.sh:ro
       - ./data/apache_logs:/data/apache_logs:ro
       - ./data/gfu-bulk-endpoint.jsonl:/data/gfu-bulk-endpoint.jsonl:ro
-    entrypoint: ["/bin/sh", "/load-data.sh"]
+    entrypoint: ["/bin/sh", "-c", "sed 's/\\r$//' /load-data.sh > /tmp/load-data.sh && sh /tmp/load-data.sh"]
     networks:
       - opensearch-net
 
