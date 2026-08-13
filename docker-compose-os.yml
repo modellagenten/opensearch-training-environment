@@ -79,6 +79,23 @@ services:
     networks:
       - opensearch-net
 
+  logstash:
+    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:8.9.0
+    container_name: logstash
+    depends_on:
+      - opensearch-node1
+      - opensearch-node2
+    environment:
+      - OPENSEARCH_PASSWORD=${OPENSEARCH_PASSWORD}
+      - LS_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./data/logstash/pipeline/:/usr/share/logstash/pipeline/:ro
+      - ./data/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+    ports:
+      - 5044:5044
+    networks:
+      - opensearch-net
+
   prometheus:
     image: prom/prometheus:v3.7.0
     container_name: prometheus

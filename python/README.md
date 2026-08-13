@@ -299,7 +299,7 @@ Nach erfolgreichem Verbindungstest können Sie:
 
 **VS Code:**
 - Installieren Sie die "Python" Extension
-- Wählen Sie den Python-Interpreter (Cmd/Ctrl+Shift+P → "Python: Select Interpreter")
+- Wählen Sie den Python-Interpreter (Cmd/Ctrl+Shift+P -> "Python: Select Interpreter")
 - VS Code erkennt automatisch die Requirements
 
 **Jupyter Notebook:**

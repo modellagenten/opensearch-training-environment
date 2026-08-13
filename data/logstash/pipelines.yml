@@ -1,0 +1,2 @@
+- pipeline.id: winlogbeat
+  path.config: "/usr/share/logstash/pipeline/winlogbeat.conf"
