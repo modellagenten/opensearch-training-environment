@@ -1,2 +1,2 @@
-FROM opensearchproject/opensearch:3.8.0
+FROM opensearchproject/opensearch:3.7.0
 RUN ./bin/opensearch-plugin install https://github.com/opensearch-project/opensearch-prometheus-exporter/releases/download/3.7.0.0/prometheus-exporter-3.7.0.0.zip
