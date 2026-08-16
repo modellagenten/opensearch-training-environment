@@ -1,0 +1,4 @@
+Gemeinsames Snapshot-Repository fuer Uebung 10.
+Dieses Verzeichnis wird in beide OpenSearch-Nodes unter /mnt/snapshots eingehaengt
+und ist dort ueber die Einstellung path.repo als Repository-Ziel freigegeben.
+Der Inhalt wird von OpenSearch verwaltet und nicht versioniert.
