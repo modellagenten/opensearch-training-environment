@@ -4,10 +4,46 @@ set -e
 OS_URL="https://opensearch-node1:9200"
 AUTH="admin:${OPENSEARCH_PASSWORD}"
 CURL="curl -sf -k -u ${AUTH}"
+# ohne --fail: fuer Aufrufe, deren HTTP-Fehler wir selbst auswerten wollen
+CURL_RAW="curl -s -k -u ${AUTH}"
 
 log()  { printf '\n── %s ──\n' "$1"; }
 ok()   { printf '✅ %s\n' "$1"; }
 warn() { printf '⚠️  %s\n' "$1"; }
+
+# ──────────────────────────────────────────────
+#  Helper: Dokumentanzahl eines Index
+#  Gibt nichts aus, wenn der Index nicht existiert.
+# ──────────────────────────────────────────────
+index_doc_count() {
+  $CURL_RAW "${OS_URL}/${1}/_count" 2>/dev/null \
+    | sed -n 's/.*"count":\([0-9]*\).*/\1/p'
+}
+
+# ──────────────────────────────────────────────
+#  Helper: Index anlegen, falls noetig
+#  Usage: ensure_index <name> <erwartete_dokumente> <mapping-json>
+#  Rueckgabe 0 = Daten muessen geladen werden, 1 = nichts zu tun
+# ──────────────────────────────────────────────
+ensure_index() {
+  _idx="$1"; _expected="$2"; _body="$3"
+  _count=$(index_doc_count "$_idx")
+
+  if [ -n "$_count" ]; then
+    if [ "$_count" = "$_expected" ]; then
+      ok "Index $_idx enthaelt bereits $_count Dokumente - wird uebersprungen."
+      return 1
+    fi
+    warn "Index $_idx enthaelt $_count von $_expected Dokumenten - wird neu aufgebaut."
+    $CURL_RAW -X DELETE "${OS_URL}/${_idx}" > /dev/null
+  fi
+
+  $CURL -X PUT "${OS_URL}/${_idx}" \
+    -H 'Content-Type: application/json' \
+    -d "$_body" > /dev/null
+  ok "Index $_idx created."
+  return 0
+}
 
 # ──────────────────────────────────────────────
 #  Wait for OpenSearch
@@ -28,7 +64,9 @@ send_bulk() {
   _chunk_lines="${BULK_CHUNK_LINES:-2000}"
   _total=$(wc -l < "$_file")
   _sent=0
+  _failed=0
 
+  rm -f /tmp/_bulk_chunk_*
   split -l "$_chunk_lines" -a 4 "$_file" /tmp/_bulk_chunk_
 
   for _chunk in /tmp/_bulk_chunk_*; do
@@ -37,7 +75,17 @@ send_bulk() {
 
     $CURL -X POST "${OS_URL}/_bulk" "$@" \
       -H 'Content-Type: application/x-ndjson' \
-      --data-binary "@${_chunk}" > /dev/null
+      --data-binary "@${_chunk}" -o /tmp/_bulk_response.json
+
+    # Bulk antwortet auch bei fehlgeschlagenen Einzeldokumenten mit HTTP 200,
+    # deshalb die Items selbst pruefen - sonst gehen Dokumente still verloren.
+    _chunk_failed=$(grep -o '"status":[45][0-9][0-9]' /tmp/_bulk_response.json | wc -l | tr -d ' ')
+    if [ "$_chunk_failed" -gt 0 ]; then
+      _failed=$((_failed + _chunk_failed))
+      printf '\n'
+      warn "$_chunk_failed Dokumente aus $(basename "$_chunk") abgelehnt. Erste Ursache:"
+      grep -o '"reason":"[^"]*"' /tmp/_bulk_response.json | head -1
+    fi
 
     _chunk_count=$(wc -l < "$_chunk")
     _sent=$((_sent + _chunk_count))
@@ -45,6 +93,11 @@ send_bulk() {
     rm -f "$_chunk"
   done
   printf '\n'
+  rm -f /tmp/_bulk_response.json
+
+  if [ "$_failed" -gt 0 ]; then
+    warn "Insgesamt $_failed Dokumente wurden abgelehnt."
+  fi
 }
 
 # ══════════════════════════════════════════════
@@ -77,9 +130,9 @@ else
 
   log "Apache Logs – Index"
 
-  $CURL -X PUT "${OS_URL}/apache-logs" \
-    -H 'Content-Type: application/json' \
-    -d '{
+  APACHE_TOTAL=$(wc -l < "$APACHE_FILE" | tr -d ' ')
+
+  APACHE_MAPPING='{
     "settings": {
       "number_of_shards": 1,
       "number_of_replicas": 1,
@@ -101,24 +154,27 @@ else
         "user_agent":  { "type": "object" }
       }
     }
-  }' > /dev/null
-  ok "Index apache-logs created."
+  }'
 
-  log "Apache Logs – Loading data"
+  if ensure_index "apache-logs" "$APACHE_TOTAL" "$APACHE_MAPPING"; then
+    log "Apache Logs – Loading data"
 
-  TOTAL=$(wc -l < "$APACHE_FILE")
-  printf '   Converting %d log lines to NDJSON ...\n' "$TOTAL"
+    printf '   Converting %d log lines to NDJSON ...\n' "$APACHE_TOTAL"
 
-  awk '{
-    gsub(/\\/, "\\\\")
-    gsub(/"/, "\\\"")
-    print "{\"index\":{\"_index\":\"apache-logs\"}}"
-    print "{\"message\":\"" $0 "\"}"
-  }' "$APACHE_FILE" > /tmp/apache_bulk.ndjson
+    # Escaping bewusst mit sed: gsub(/\\/, "\\\\") verhaelt sich je nach awk
+    # unterschiedlich und laesst in busybox awk Sequenzen wie \x22 unmaskiert
+    # stehen. Das ergibt ungueltiges JSON, und mit default_pipeline verliert
+    # OpenSearch dann den ganzen Bulk-Chunk statt nur der kaputten Zeile.
+    sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' "$APACHE_FILE" \
+      | sed -e 's|^|{"message":"|' -e 's|$|"}|' \
+      | awk '{ print "{\"index\":{\"_index\":\"apache-logs\"}}"; print }' \
+      > /tmp/apache_bulk.ndjson
 
-  BULK_CHUNK_LINES=2000 send_bulk /tmp/apache_bulk.ndjson
-  rm -f /tmp/apache_bulk.ndjson
-  ok "Apache logs: $TOTAL documents loaded."
+    BULK_CHUNK_LINES=2000 send_bulk /tmp/apache_bulk.ndjson
+    rm -f /tmp/apache_bulk.ndjson
+    $CURL_RAW -X POST "${OS_URL}/apache-logs/_refresh" > /dev/null
+    ok "Apache logs: $APACHE_TOTAL documents loaded."
+  fi
 fi
 
 # ══════════════════════════════════════════════
@@ -131,9 +187,10 @@ if [ ! -f "$RECIPE_FILE" ]; then
 else
   log "Rezepte – Index"
 
-  $CURL -X PUT "${OS_URL}/rezepte" \
-    -H 'Content-Type: application/json' \
-    -d '{
+  TOTAL_LINES=$(wc -l < "$RECIPE_FILE" | tr -d ' ')
+  TOTAL_DOCS=$((TOTAL_LINES / 2))
+
+  RECIPE_MAPPING='{
     "settings": {
       "number_of_shards": 1,
       "number_of_replicas": 1
@@ -150,21 +207,21 @@ else
         "Weekday":      { "type": "keyword" }
       }
     }
-  }' > /dev/null
-  ok "Index rezepte created."
+  }'
 
-  log "Rezepte – Loading data"
+  if ensure_index "rezepte" "$TOTAL_DOCS" "$RECIPE_MAPPING"; then
+    log "Rezepte – Loading data"
 
-  TOTAL_LINES=$(wc -l < "$RECIPE_FILE")
-  TOTAL_DOCS=$((TOTAL_LINES / 2))
-  printf '   %d recipes to load ...\n' "$TOTAL_DOCS"
+    printf '   %d recipes to load ...\n' "$TOTAL_DOCS"
 
-  sed 's/"_index": "gfu-bulk-endpoint"/"_index": "rezepte"/g' "$RECIPE_FILE" \
-    > /tmp/rezepte_bulk.ndjson
+    sed 's/"_index": "gfu-bulk-endpoint"/"_index": "rezepte"/g' "$RECIPE_FILE" \
+      > /tmp/rezepte_bulk.ndjson
 
-  BULK_CHUNK_LINES=2000 send_bulk /tmp/rezepte_bulk.ndjson
-  rm -f /tmp/rezepte_bulk.ndjson
-  ok "Recipes: $TOTAL_DOCS documents loaded."
+    BULK_CHUNK_LINES=2000 send_bulk /tmp/rezepte_bulk.ndjson
+    rm -f /tmp/rezepte_bulk.ndjson
+    $CURL_RAW -X POST "${OS_URL}/rezepte/_refresh" > /dev/null
+    ok "Recipes: $TOTAL_DOCS documents loaded."
+  fi
 fi
 
 # ══════════════════════════════════════════════
