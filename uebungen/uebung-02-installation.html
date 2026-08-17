@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>uebung-02-installation.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="übung-2-opensearch-umgebung-starten--erste-schritte-beide">Übung 2: OpenSearch-Umgebung starten &amp; erste Schritte [Beide]</h1>
+<h2 id="einleitung">Einleitung</h2>
+<p>In dieser Übung starten wir die OpenSearch-Schulungsumgebung mit Docker Compose. Die Umgebung enthält einen <strong>2-Node-Cluster</strong> mit OpenSearch 3.7.0, <strong>OpenSearch Dashboards</strong>, <strong>Logstash</strong> sowie <strong>Prometheus</strong> und <strong>Grafana</strong> für das Monitoring. Beim ersten Start werden außerdem automatisch zwei Datensätze geladen, mit denen wir in den folgenden Übungen arbeiten. Nach dem Start machen wir erste Schritte mit der REST API und indexieren unsere ersten Dokumente - die Produktdaten aus Übung 1 kommen jetzt in den Cluster.</p>
+<h2 id="lernziele">Lernziele</h2>
+<ul>
+<li>Docker-Compose-Umgebung für OpenSearch vorbereiten, starten und prüfen</li>
+<li>Cluster-Status, Nodes und Indizes mit der REST API abfragen</li>
+<li>Die vorgeladenen Datensätze verifizieren</li>
+<li>Erste Dokumente über die REST API und die Bulk API indexieren</li>
+<li>Dev Tools Console in OpenSearch Dashboards nutzen</li>
+<li>Monitoring-Stack (Prometheus, Grafana) verifizieren</li>
+</ul>
+<h2 id="voraussetzungen">Voraussetzungen</h2>
+<ul>
+<li>Übung 1 abgeschlossen</li>
+<li>Docker mit Compose v2 installiert (Docker Desktop oder Docker Engine)</li>
+<li>Mindestens 8 GB RAM für Docker verfügbar</li>
+<li>Ports 3000, 5044, 5601, 9090, 9200 und 9600 frei</li>
+<li><strong>Netzzugang beim ersten Start:</strong> Die Node-Images werden lokal gebaut und laden dabei das Prometheus-Exporter-Plugin von GitHub</li>
+</ul>
+<hr>
+<h2 id="aufgabe">Aufgabe</h2>
+<h3 id="teil-1-umgebung-vorbereiten-und-starten">Teil 1: Umgebung vorbereiten und starten</h3>
+<ol>
+<li>
+<p>Wechselt in das Wurzelverzeichnis der Schulungsumgebung - dort liegt die <code>docker-compose.yml</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> opensearch-training-environment
+<span class="hljs-built_in">ls</span> docker-compose.yml env.example
+</div></code></pre>
+</li>
+<li>
+<p>Legt die <code>.env</code>-Datei an - sie ist <strong>nicht</strong> im Repository enthalten:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">cp</span> env.example .<span class="hljs-built_in">env</span>
+</div></code></pre>
+<p>Die Datei enthält unter <code>OPENSEARCH_PASSWORD</code> das Admin-Passwort. Notiert euch den Wert, ihr braucht ihn gleich für den Login.</p>
+<blockquote>
+<p><strong>Wichtig:</strong> Ohne <code>.env</code> bleibt <code>OPENSEARCH_INITIAL_ADMIN_PASSWORD</code> leer, und die Nodes starten seit OpenSearch 2.12 gar nicht.</p>
+<p>Wenn ihr das Passwort ändert, müsst ihr es auch in <code>data/prometheus.yml</code> anpassen - sonst kommt Prometheus nicht mehr an die Metriken.</p>
+</blockquote>
+</li>
+<li>
+<p>Startet die Umgebung:</p>
+<pre class="hljs"><code><div>docker compose up -d
+</div></code></pre>
+<p>Der <strong>erste</strong> Start dauert mehrere Minuten, weil die Node-Images gebaut werden. Danach geht es in etwa einer Minute.</p>
+</li>
+<li>
+<p>Prüft, ob alle Container laufen:</p>
+<pre class="hljs"><code><div>docker compose ps
+</div></code></pre>
+<p>Ihr solltet <strong>6 laufende</strong> Container sehen: <code>opensearch-node1</code>, <code>opensearch-node2</code>, <code>opensearch-dashboards</code>, <code>logstash</code>, <code>prometheus</code>, <code>grafana</code>.</p>
+</li>
+<li>
+<p>Es gibt einen siebten Container, den ihr nur mit <code>-a</code> seht:</p>
+<pre class="hljs"><code><div>docker compose ps -a
+</div></code></pre>
+<p><code>opensearch-init</code> lädt die Beispieldaten und <strong>beendet sich danach</strong>. Ein Status wie <code>Exited (0)</code> ist hier also kein Fehler, sondern das erwartete Ergebnis.</p>
+</li>
+<li>
+<p>Falls ein Container nicht startet, prüft die Logs:</p>
+<pre class="hljs"><code><div>docker compose logs opensearch-node1
+docker compose logs opensearch-init
+</div></code></pre>
+</li>
+<li>
+<p>Merkt euch die beiden Kommandos zum Aufräumen:</p>
+<pre class="hljs"><code><div>docker compose down      <span class="hljs-comment"># Container stoppen, Daten im Volume bleiben</span>
+docker compose down -v   <span class="hljs-comment"># Container UND Daten löschen - der Reset-Knopf</span>
+</div></code></pre>
+</li>
+</ol>
+<hr>
+<h3 id="teil-2-cluster-prüfen">Teil 2: Cluster prüfen</h3>
+<ol>
+<li>
+<p>Öffnet im Browser: <strong>https://localhost:9200</strong></p>
+<ul>
+<li>Benutzername: <code>admin</code></li>
+<li>Passwort: (aus der <code>.env</code>-Datei)</li>
+<li>Akzeptiert das selbstsignierte Zertifikat</li>
+<li>-&gt; Welche Version und welche Lucene-Version zeigt die Antwort?</li>
+</ul>
+</li>
+<li>
+<p>Öffnet <strong>OpenSearch Dashboards</strong>: <strong>http://localhost:5601</strong></p>
+<ul>
+<li>Meldet euch mit denselben Zugangsdaten an</li>
+<li>Navigiert zu <strong>Dev Tools</strong> (Menü links -&gt; Management -&gt; Dev Tools)</li>
+</ul>
+</li>
+<li>
+<p>Führt in der Dev Tools Console folgende Abfragen aus:</p>
+<p><strong>Cluster-Gesundheit prüfen:</strong></p>
+<pre class="hljs"><code><div>GET _cluster/health
+</div></code></pre>
+<p>-&gt; Welchen Status hat der Cluster? (green/yellow/red) Wie viele Nodes sind erkannt?</p>
+<p><strong>Nodes anzeigen:</strong></p>
+<pre class="hljs"><code><div>GET _cat/nodes?v
+</div></code></pre>
+<p>-&gt; Sind beide Nodes sichtbar? Welche Rollen haben sie? Welcher Node ist mit <code>*</code> als Cluster Manager markiert?</p>
+<p><strong>Vorhandene Indizes prüfen:</strong></p>
+<pre class="hljs"><code><div>GET _cat/indices?v&amp;s=index
+</div></code></pre>
+<p>-&gt; Welche Indizes beginnen mit einem Punkt, und wozu gehören sie? Welche Indizes enthalten schon Daten?</p>
+<p><strong>Cluster-Einstellungen:</strong></p>
+<pre class="hljs"><code><div>GET _cluster/settings?include_defaults=true&amp;flat_settings=true
+</div></code></pre>
+<p>-&gt; Sucht in der Ausgabe nach <code>cluster.max_shards_per_node</code>. Wie viele Shards erlaubt ein Node?</p>
+</li>
+</ol>
+<hr>
+<h3 id="teil-3-vorgeladene-daten-prüfen">Teil 3: Vorgeladene Daten prüfen</h3>
+<p>Der Container <code>opensearch-init</code> hat beim Start zwei Datensätze über die Bulk API geladen. Diese Daten sind die Grundlage für die Übungen 3 bis 8.</p>
+<pre class="hljs"><code><div>GET apache-logs/_count
+</div></code></pre>
+<p>-&gt; Erwartet: <strong>10.012</strong> Dokumente (Apache Access Logs)</p>
+<pre class="hljs"><code><div>GET rezepte/_count
+</div></code></pre>
+<p>-&gt; Erwartet: <strong>12.190</strong> Dokumente (Rezepte mit deutschem Analyzer)</p>
+<p>Schaut euch ein Beispieldokument aus jedem Index an:</p>
+<pre class="hljs"><code><div>GET apache-logs/_search
+{
+  &quot;size&quot;: 1
+}
+</div></code></pre>
+<pre class="hljs"><code><div>GET rezepte/_search
+{
+  &quot;size&quot;: 1
+}
+</div></code></pre>
+<p>-&gt; Die Apache-Logs wurden beim Laden durch eine <strong>Ingest Pipeline</strong> geparst. Welche strukturierten Felder erkennt ihr, die in einer Logzeile so nicht stehen?</p>
+<blockquote>
+<p><strong>Wenn die Zahlen nicht stimmen:</strong> Prüft mit <code>docker compose logs opensearch-init</code>, ob das Laden durchgelaufen ist. Ein vollständiger Neustart mit <code>docker compose down -v</code> und <code>docker compose up -d</code> lädt die Daten erneut.</p>
+</blockquote>
+<hr>
+<h3 id="teil-4-erste-dokumente-indexieren">Teil 4: Erste Dokumente indexieren</h3>
+<ol>
+<li>
+<p>Indexiert das erste Produkt aus Übung 1 über <a href="http://localhost:5601/app/dev_tools#/console">Dev Tools</a>:</p>
+<pre class="hljs"><code><div>PUT /produkte/_doc/1
+{
+  &quot;name&quot;: &quot;OpenSearch T-Shirt&quot;,
+  &quot;kategorie&quot;: &quot;Merchandise&quot;,
+  &quot;preis&quot;: 29.99,
+  &quot;verfuegbar&quot;: true,
+  &quot;tags&quot;: [&quot;opensearch&quot;, &quot;merch&quot;, &quot;clothing&quot;],
+  &quot;bewertung&quot;: {
+    &quot;durchschnitt&quot;: 4.5,
+    &quot;anzahl&quot;: 120
+  }
+}
+</div></code></pre>
+<p>-&gt; Was steht im Feld <code>result</code> der Antwort? Führt den Aufruf ein zweites Mal aus - was ändert sich?</p>
+</li>
+<li>
+<p>Ruft das Dokument ab und prüft, ob es korrekt gespeichert wurde:</p>
+<pre class="hljs"><code><div>GET /produkte/_doc/1
+</div></code></pre>
+</li>
+<li>
+<p>Indexiert die restlichen Produkte per <strong>Bulk API</strong> - nutzt dazu das NDJSON-Format:</p>
+<pre class="hljs"><code><div>POST _bulk
+{&quot;index&quot;: {&quot;_index&quot;: &quot;produkte&quot;, &quot;_id&quot;: &quot;2&quot;}}
+{&quot;name&quot;: &quot;Dashboard Handbuch&quot;, &quot;kategorie&quot;: &quot;Bücher&quot;, &quot;preis&quot;: 39.50, &quot;verfuegbar&quot;: true, &quot;tags&quot;: [&quot;opensearch&quot;, &quot;dashboards&quot;, &quot;dokumentation&quot;], &quot;bewertung&quot;: {&quot;durchschnitt&quot;: 4.2, &quot;anzahl&quot;: 45}}
+{&quot;index&quot;: {&quot;_index&quot;: &quot;produkte&quot;, &quot;_id&quot;: &quot;3&quot;}}
+{&quot;name&quot;: &quot;Cluster Monitoring Poster&quot;, &quot;kategorie&quot;: &quot;Merchandise&quot;, &quot;preis&quot;: 14.99, &quot;verfuegbar&quot;: false, &quot;tags&quot;: [&quot;opensearch&quot;, &quot;monitoring&quot;, &quot;poster&quot;], &quot;bewertung&quot;: {&quot;durchschnitt&quot;: 3.8, &quot;anzahl&quot;: 12}}
+
+</div></code></pre>
+<blockquote>
+<p><strong>Wichtig:</strong> Der Bulk-Request muss mit einer leeren Zeile enden!</p>
+</blockquote>
+</li>
+<li>
+<p>Prüft den Index:</p>
+<pre class="hljs"><code><div>GET _cat/indices/produkte?v
+</div></code></pre>
+<p>-&gt; Wie viele Dokumente enthält der Index?</p>
+</li>
+<li>
+<p>Schaut euch an, welche Feldtypen OpenSearch <strong>automatisch</strong> gewählt hat:</p>
+<pre class="hljs"><code><div>GET produkte/_mapping
+</div></code></pre>
+<p>-&gt; Welchen Typ hat <code>preis</code>? Welchen Typ hat <code>name</code>, und welches Unterfeld ist dazu entstanden? Wir kommen in Übung 4 darauf zurück.</p>
+</li>
+</ol>
+<hr>
+<h3 id="teil-5-monitoring-prüfen">Teil 5: Monitoring prüfen</h3>
+<ol>
+<li>
+<p>Öffnet <strong>Prometheus</strong>: http://localhost:9090</p>
+<ul>
+<li>Navigiert zu <strong>Status -&gt; Targets</strong></li>
+<li>Es gibt zwei Jobs: <code>prometheus</code> (Prometheus selbst) und <code>opensearch</code> mit <strong>beiden</strong> Nodes</li>
+<li>Prüft, ob die beiden OpenSearch-Targets den Status <code>UP</code> haben</li>
+<li>Der abgefragte Endpunkt ist <code>/_prometheus/metrics</code> aus dem Prometheus-Exporter-Plugin</li>
+</ul>
+<blockquote>
+<p><strong>Bei Status <code>DOWN</code> mit 401:</strong> Das Passwort in <code>data/prometheus.yml</code> stimmt nicht mit dem in der <code>.env</code> überein.</p>
+</blockquote>
+</li>
+<li>
+<p>Öffnet <strong>Grafana</strong>: http://localhost:3000</p>
+<ul>
+<li>Login: <code>admin</code> / <code>admin</code> - Grafana fragt danach nach einem neuen Passwort, das könnt ihr für die Schulung überspringen</li>
+<li>Prüft unter <strong>Dashboards</strong>, ob ein vorkonfiguriertes OpenSearch-Dashboard vorhanden ist</li>
+<li>Welche Metriken werden angezeigt? (z.B. JVM Heap Usage, Indexing Rate)</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="erwartete-ergebnisse">Erwartete Ergebnisse</h2>
+<ul>
+<li>6 Container laufen (<code>docker compose ps</code> zeigt Status <code>Up</code>), <code>opensearch-init</code> ist beendet</li>
+<li>Cluster-Status ist <code>green</code>, beide Nodes (<code>opensearch-node1</code>, <code>opensearch-node2</code>) sind sichtbar</li>
+<li>Version 3.7.0 wird gemeldet</li>
+<li><code>apache-logs</code> enthält 10.012 und <code>rezepte</code> 12.190 Dokumente</li>
+<li>3 Produkte im Index <code>produkte</code> indexiert</li>
+<li>Das automatisch erzeugte Mapping von <code>produkte</code> ist bekannt</li>
+<li>Prometheus-Targets <code>UP</code>, Grafana-Dashboard erreichbar</li>
+</ul>
+<hr>
+<h2 id="wiederholung">Wiederholung</h2>
+<h3 id="rest-api-verben-in-opensearch">REST-API-Verben in OpenSearch</h3>
+<table>
+<thead>
+<tr>
+<th>HTTP-Verb</th>
+<th>Verwendung in OpenSearch</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td>Daten abrufen, Suchen</td>
+<td><code>GET /produkte/_doc/1</code></td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td>Dokument mit ID erstellen/ersetzen</td>
+<td><code>PUT /produkte/_doc/1 {...}</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>Dokument ohne ID erstellen, Bulk, Suchen</td>
+<td><code>POST _bulk {...}</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td>Dokument oder Index löschen</td>
+<td><code>DELETE /produkte/_doc/1</code></td>
+</tr>
+<tr>
+<td><code>HEAD</code></td>
+<td>Existenz prüfen (ohne Body)</td>
+<td><code>HEAD /produkte</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="cluster-status-farben">Cluster-Status-Farben</h3>
+<table>
+<thead>
+<tr>
+<th>Farbe</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Green</td>
+<td>Alle Primary- und Replica-Shards sind zugewiesen</td>
+</tr>
+<tr>
+<td>Yellow</td>
+<td>Alle Primary-Shards zugewiesen, aber Replicas fehlen</td>
+</tr>
+<tr>
+<td>Red</td>
+<td>Mindestens ein Primary-Shard ist nicht zugewiesen</td>
+</tr>
+</tbody>
+</table>
+<h3 id="die-container-der-schulungsumgebung">Die Container der Schulungsumgebung</h3>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Aufgabe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>opensearch-node1</code></td>
+<td>Datenknoten, per Port 9200 und 9600 von außen erreichbar</td>
+</tr>
+<tr>
+<td><code>opensearch-node2</code></td>
+<td>Datenknoten, nur im Docker-Netz erreichbar</td>
+</tr>
+<tr>
+<td><code>opensearch-dashboards</code></td>
+<td>Web-Oberfläche auf Port 5601</td>
+</tr>
+<tr>
+<td><code>opensearch-init</code></td>
+<td>lädt die Beispieldaten und beendet sich</td>
+</tr>
+<tr>
+<td><code>logstash</code></td>
+<td>wird in xx Abschlussprojekt und im Logstash-Block genutzt</td>
+</tr>
+<tr>
+<td><code>prometheus</code></td>
+<td>sammelt Metriken auf Port 9090</td>
+</tr>
+<tr>
+<td><code>grafana</code></td>
+<td>zeigt die Metriken auf Port 3000</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="tipps--ressourcen">Tipps &amp; Ressourcen</h2>
+<h3 id="vorgehen">Vorgehen</h3>
+<ul>
+<li>Startet die Container <strong>immer</strong> mit <code>-d</code> (detached), damit das Terminal frei bleibt</li>
+<li>Bei Zertifikatsfehlern im Browser: <code>https://</code> verwenden und Warnung akzeptieren</li>
+<li>Für curl-Anfragen an OpenSearch: <code>curl -k -u admin:&lt;passwort&gt; https://localhost:9200</code></li>
+<li><code>docker compose logs -f &lt;container&gt;</code> zeigt die Logs laufend mit - das erste Werkzeug bei jedem Problem</li>
+<li>Node 2 zeigt in <code>docker compose ps</code> keine Ports mit <code>0.0.0.0</code> - das ist beabsichtigt, er ist nur intern erreichbar</li>
+</ul>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Lösung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Container startet nicht</td>
+<td><code>docker compose logs &lt;container&gt;</code> prüfen</td>
+</tr>
+<tr>
+<td>Node beendet sich sofort</td>
+<td><code>.env</code> fehlt oder Passwort zu schwach - <code>cp env.example .env</code></td>
+</tr>
+<tr>
+<td>Image-Build schlägt fehl</td>
+<td>Kein Netzzugang zu GitHub für das Exporter-Plugin, ggf. Proxy setzen</td>
+</tr>
+<tr>
+<td><code>max virtual memory areas</code> Fehler</td>
+<td>Linux/WSL: <code>sudo sysctl -w vm.max_map_count=262144</code>. Docker Desktop auf macOS/Windows setzt das in der eigenen VM bereits</td>
+</tr>
+<tr>
+<td>Port bereits belegt</td>
+<td><code>lsof -i :9200</code> und konkurrierenden Prozess stoppen</td>
+</tr>
+<tr>
+<td>Dashboards zeigt Fehler</td>
+<td>Warten bis die Nodes vollständig gestartet sind (ca. 30-60s)</td>
+</tr>
+<tr>
+<td>Zertifikatsfehler bei curl</td>
+<td>Flag <code>-k</code> verwenden um die SSL-Verifikation zu überspringen</td>
+</tr>
+<tr>
+<td>Daten fehlen (<code>apache-logs</code> leer)</td>
+<td><code>docker compose logs opensearch-init</code> prüfen, dann <code>down -v</code> und neu starten</td>
+</tr>
+<tr>
+<td>Prometheus-Target <code>DOWN</code> (401)</td>
+<td>Passwort in <code>data/prometheus.yml</code> an die <code>.env</code> angleichen</td>
+</tr>
+</tbody>
+</table>
+<h3 id="weiterführend">Weiterführend</h3>
+<ul>
+<li><a href="https://docs.opensearch.org/latest/api-reference/">OpenSearch REST API</a></li>
+<li><a href="https://docs.opensearch.org/latest/install-and-configure/install-opensearch/docker/">OpenSearch Docker Installation</a></li>
+<li><a href="https://docs.opensearch.org/latest/api-reference/document-apis/bulk/">Bulk API Dokumentation</a></li>
+<li><a href="https://docs.opensearch.org/latest/api-reference/cat/index/">CAT APIs im Überblick</a></li>
+<li><a href="https://docs.docker.com/compose/">Docker Compose Dokumentation</a></li>
+</ul>
+
+</body>
+</html>

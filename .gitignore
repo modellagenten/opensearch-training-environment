@@ -1,6 +1,5 @@
 .DS_Store
 *.pdf
-*.html
 !folien/**/*.html.tpl
 dist/
 .venv/

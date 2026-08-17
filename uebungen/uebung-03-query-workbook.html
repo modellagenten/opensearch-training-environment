@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>uebung-03-query-workbook.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="übung-3-query-workbook---vom-filter-zur-volltextsuche-beide">Übung 3: Query Workbook - vom Filter zur Volltextsuche [Beide]</h1>
+<h2 id="einleitung">Einleitung</h2>
+<p>Query DSL ist das Herzstück jeder Suchanwendung. In dieser Übung arbeitet ihr in den Dev Tools mit dem Index <code>apache-logs</code>, den die Schulungsumgebung geladen hat: 10.012 Zugriffe auf einen Webserver aus vier Tagen im Mai 2025, von einer Ingest Pipeline in typisierte Felder zerlegt.</p>
+<p>Genau diese Mischung macht den Datensatz zum guten Übungsobjekt. <code>clientip</code> ist eine IP-Adresse, <code>response</code> und <code>bytes</code> sind Zahlen, <code>@timestamp</code> ist ein Datum, <code>verb</code> ist ein <code>keyword</code> - und <code>request</code> und <code>agent</code> sind Volltext. Zu jeder dieser Feldarten gehört ein anderer Query-Typ, und die falsche Wahl liefert keine Fehlermeldung, sondern stillschweigend null Treffer. Das zu erkennen ist der eigentliche Kern dieser Übung.</p>
+<p>Ihr bekommt Ziele und Zahlen zum Selbstcheck, die Queries formuliert ihr selbst. Hinweise stehen aufklappbar unter den Aufgaben, Bonusaufgaben am Ende.</p>
+<h2 id="lernziele">Lernziele</h2>
+<ul>
+<li>Zu einer Frage den passenden Query-Typ wählen: <code>term</code>, <code>terms</code>, <code>range</code>, <code>exists</code> oder <code>match</code></li>
+<li>Query Context und Filter Context unterscheiden und die eigene Wahl begründen</li>
+<li>Erklären, warum <code>term</code> auf einem <code>text</code>-Feld fast immer ins Leere läuft</li>
+<li>Die Wirkung des Standard-Analyzers auf URLs erkennen und an Trefferzahlen belegen</li>
+<li><code>simple_query_string</code> mit Feldgewichtung einsetzen und sauber vom <code>query_string</code> abgrenzen</li>
+<li>Bedingungen in einer <code>bool</code>-Query zu einer realistischen Abfrage kombinieren</li>
+<li>Treffer mit <code>highlight</code> markieren und Tippfehler mit einem Term-Suggester vorschlagen lassen</li>
+</ul>
+<h2 id="voraussetzungen">Voraussetzungen</h2>
+<ul>
+<li>Übung 2 abgeschlossen, Dev Tools Console erreichbar</li>
+<li>Prüft: <code>GET apache-logs/_count</code> -&gt; <strong>10.012</strong> Dokumente</li>
+<li>Wenn euch nur die Trefferzahl interessiert, setzt <code>&quot;size&quot;: 0</code> - das erspart euch das Scrollen durch Treffer</li>
+</ul>
+<hr>
+<h2 id="aufgabe">Aufgabe</h2>
+<h3 id="teil-1-den-datensatz-verstehen">Teil 1: Den Datensatz verstehen</h3>
+<p><strong>Ziel:</strong> Wissen, welcher Feldtyp euch gleich welche Query aufzwingt.</p>
+<ol>
+<li>
+<p><strong>Struktur klären.</strong> Ruft das Mapping ab und lasst euch ein einzelnes Dokument anzeigen.</p>
+<ul>
+<li>Welche Felder sind getypt (<code>ip</code>, <code>long</code>, <code>integer</code>, <code>date</code>, <code>keyword</code>) und welche sind <code>text</code>?</li>
+<li>Die meisten Textfelder haben ein <code>.keyword</code>-Unterfeld. Eines hat keines - welches ist es, und was könnt ihr mit diesem Feld deshalb nicht tun?</li>
+<li>Welches Feld durchsucht ihr, wenn jemand nach einem Pfad fragt? Und welches bei der Frage nach einem Browser?</li>
+</ul>
+</li>
+<li>
+<p><strong>Verteilung prüfen.</strong> Ermittelt per Aggregation, welche HTTP-Methoden im Log vorkommen.
+<strong>Selbstcheck:</strong> <code>GET</code> 9.963, <code>HEAD</code> 42, <code>POST</code> 5, <code>OPTIONS</code> 1.</p>
+</li>
+<li>
+<p><strong>Lücken finden.</strong> Bestimmt den Zeitraum der Daten und zählt, in wie vielen Dokumenten das Feld <code>bytes</code> fehlt.
+<strong>Selbstcheck:</strong> 17.05.2025 10:05 UTC bis 20.05.2025 21:05 UTC. <code>bytes</code> fehlt in <strong>671</strong> Dokumenten, und ein einziges Dokument hat nicht einmal einen <code>@timestamp</code>.
+<strong>Frage:</strong> Wie verhalten sich diese Dokumente bei einer <code>range</code>-Query auf <code>bytes</code>? Und was bedeutet das für einen Durchschnittswert, den ihr in einen Report schreibt?</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<p>Das Mapping holt ihr mit <code>GET apache-logs/_mapping</code>, ein Beispieldokument mit <code>GET apache-logs/_search</code> und <code>&quot;size&quot;: 1</code>.
+Für Aufgabe 2 und 3 braucht ihr <code>&quot;size&quot;: 0</code> und einen <code>aggs</code>-Block: <code>terms</code> liefert die Verteilung, <code>stats</code> auf <code>@timestamp</code> den Zeitraum.
+Dokumente ohne ein bestimmtes Feld findet ihr, indem ihr eine <code>exists</code>-Query in eine <code>must_not</code>-Klausel setzt.</p>
+</details>
+<hr>
+<h3 id="teil-2-exakte-werte-bereiche-existenz">Teil 2: Exakte Werte, Bereiche, Existenz</h3>
+<p><strong>Ziel:</strong> Die Filter-Werkzeuge beherrschen. Das sind die Queries, die im Log-Alltag den größten Teil der Arbeit erledigen.</p>
+<p>Alle Aufgaben dieses Teils gehören in den <strong>Filter Context</strong>, also in die <code>filter</code>-Klausel einer <code>bool</code>-Query. Sie beantworten reine Ja/Nein-Fragen, für die niemand einen Score braucht.</p>
+<ol>
+<li>
+<p><strong>Exakter Wert.</strong> Zählt die <code>GET</code>-Requests. Wiederholt die Query anschließend mit <code>get</code> in Kleinbuchstaben.
+<strong>Selbstcheck:</strong> 9.963 und danach 0.
+<strong>Frage:</strong> <code>verb</code> ist ein <code>keyword</code>-Feld. Warum kostet euch ein einziger Kleinbuchstabe sämtliche Treffer, während dieselbe Schreibweise im Feld <code>request</code> niemanden stören würde?</p>
+</li>
+<li>
+<p><strong>Mehrere Werte.</strong> Findet alle Requests, die <code>POST</code> oder <code>HEAD</code> verwenden - mit einer einzigen Query, nicht mit zweien.
+<strong>Selbstcheck:</strong> 47 Treffer.</p>
+</li>
+<li>
+<p><strong>Bereiche.</strong> Zählt alle fehlerhaften Antworten ab Status 400 und danach nur die Serverfehler ab 500.
+<strong>Selbstcheck:</strong> 220 und 3.
+Zählt anschließend die Antworten, die mehr als 100.000 Bytes ausgeliefert haben.
+<strong>Selbstcheck:</strong> 574.</p>
+</li>
+<li>
+<p><strong>IP-Adressen.</strong> Zählt die Requests der Adresse <code>66.249.73.135</code>. Tauscht den Wert danach gegen <code>66.249.64.0/19</code> aus, ohne sonst etwas an der Query zu ändern.
+<strong>Selbstcheck:</strong> 484 und 574.
+<strong>Frage:</strong> Ihr habt zweimal dieselbe Query-Art benutzt und trefft plötzlich ein ganzes Netz. Woran liegt das? Und was wäre passiert, wenn die Ingest Pipeline <code>clientip</code> als <code>keyword</code> abgelegt hätte?</p>
+</li>
+<li>
+<p><strong>Die Existenz-Falle.</strong> Zählt die Dokumente, die überhaupt ein Feld <code>referrer</code> besitzen.
+<strong>Selbstcheck:</strong> <strong>5.929</strong> - nicht 10.012, obwohl das Feld in nahezu jedem Dokument im <code>_source</code> steht.
+Macht die Gegenprobe: Zählt die Dokumente, deren <code>referrer.keyword</code> exakt <code>&quot;-&quot;</code> lautet, mitsamt den Anführungszeichen, die aus der Logzeile stammen.
+<strong>Selbstcheck:</strong> 4.082. Zusammen mit den 5.929 ergibt das 10.011, also alle Dokumente bis auf das kaputte aus Teil 1.
+<strong>Frage:</strong> Der Wert steht im <code>_source</code>, <code>exists</code> findet ihn trotzdem nicht. Was macht der Analyzer aus <code>&quot;-&quot;</code>, und welche Regel für <code>exists</code> auf <code>text</code>-Feldern leitet ihr daraus ab?</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<p>Einzelne exakte Werte findet <code>term</code>, Wertelisten <code>terms</code>, Bereiche <code>range</code> mit <code>gte</code>, <code>gt</code>, <code>lte</code> und <code>lt</code>, das Vorhandensein eines Feldes <code>exists</code>.
+Gerüst für alle Aufgaben: <code>{&quot;query&quot;: {&quot;bool&quot;: {&quot;filter&quot;: [ ... ]}}}</code> zusammen mit <code>&quot;size&quot;: 0</code>.
+Für Aufgabe 5 müsst ihr die Anführungszeichen im Wert maskieren: <code>{&quot;term&quot;: {&quot;referrer.keyword&quot;: &quot;\&quot;-\&quot;&quot;}}</code>.</p>
+</details>
+<hr>
+<h3 id="teil-3-volltext-auf-logfeldern">Teil 3: Volltext auf Logfeldern</h3>
+<p><strong>Ziel:</strong> Verstehen, was der Analyzer aus einer URL macht - und warum eure Trefferzahlen unmittelbar davon abhängen.</p>
+<ol>
+<li>
+<p><strong>Volltextsuche.</strong> Sucht mit <code>match</code> im Feld <code>request</code> nach <code>presentations</code>.
+<strong>Selbstcheck:</strong> 2.306 Treffer.</p>
+</li>
+<li>
+<p><strong>Dieselbe Frage mit <code>term</code>.</strong> Probiert nacheinander die Werte <code>/presentations/</code>, <code>presentations</code> und <code>Presentations</code>.
+<strong>Selbstcheck:</strong> 0, dann 2.306, dann wieder 0.
+<strong>Frage:</strong> Formuliert in einem Satz, wann <code>term</code> auf einem <code>text</code>-Feld etwas findet. Warum ist es trotzdem ein schlechter Plan, sich im Alltag darauf zu verlassen?</p>
+</li>
+<li>
+<p><strong>Nachsehen, was wirklich im Index steht.</strong> Lasst euch mit der <code>_analyze</code>-API zeigen, welche Tokens das Feld <code>request</code> aus <code>/blog/geekery/index?page=42</code> erzeugt.
+<strong>Selbstcheck:</strong> fünf Tokens, und weder Schrägstriche noch Fragezeichen sind darunter.</p>
+</li>
+<li>
+<p><strong>Die Bilderfalle.</strong> Sucht mit <code>match</code> im <code>request</code> nach <code>png</code>. Zählt danach mit einer Wildcard auf <code>request.keyword</code>, wie viele Requests tatsächlich auf <code>.png</code> enden.
+<strong>Selbstcheck:</strong> 803 gegenüber 2.332.
+<strong>Frage:</strong> Lasst euch die Tokens von <code>/images/googledotcom.png</code> und von <code>/images/jordan-80.png</code> zeigen. Der Tokenizer behandelt die beiden Dateinamen unterschiedlich - beschreibt die Regel dahinter. Lösungsansätze schaut ihr euch in Bonus 1 an.</p>
+</li>
+<li>
+<p><strong>Mehrere Wörter.</strong> Sucht im <code>request</code> nach <code>blog geekery</code>, einmal mit dem Operator <code>or</code> und einmal mit <code>and</code>.
+<strong>Selbstcheck:</strong> 1.970 und 764.</p>
+</li>
+<li>
+<p><strong>Reihenfolge.</strong> Sucht als Phrase nach <code>blog tags</code> und danach nach <code>tags blog</code>. Vergleicht beide Ergebnisse mit einer <code>match</code>-Query und <code>operator: and</code>.
+<strong>Selbstcheck:</strong> Die Phrase liefert 1.026 und 0, die <code>match</code>-Query in beiden Richtungen 1.026.
+<strong>Frage:</strong> Welche Information nutzt die Phrasensuche, die eine normale <code>match</code>-Query wegwirft? Und welche ganz andere Query auf <code>request.keyword</code> liefert hier zufällig ebenfalls genau 1.026 Treffer?</p>
+</li>
+<li>
+<p><strong>Browser suchen.</strong> Sucht mit <code>match</code> im Feld <code>agent</code> nach <code>Firefox</code> und vergleicht das Ergebnis mit einem <code>term</code> auf <code>user_agent.name.keyword</code>.
+<strong>Selbstcheck:</strong> 2.779 gegenüber 2.608.
+<strong>Frage:</strong> Beide Zahlen sind korrekt ermittelt. Welche würdet ihr in einen Report schreiben, und wie erklärt ihr die Differenz?</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<p><code>match</code> schickt eure Eingabe durch denselben Analyzer wie beim Indexieren, <code>term</code> nicht - dort muss der Wert exakt einem Token entsprechen.
+Die Tokens eines Feldes zeigt <code>POST apache-logs/_analyze</code> mit den Schlüsseln <code>field</code> und <code>text</code>.
+Für Aufgabe 6 gibt es <code>match_phrase</code>; die alternative Query auf dem <code>keyword</code>-Feld beginnt mit demselben Buchstaben wie das Wort Präfix.</p>
+</details>
+<hr>
+<h3 id="teil-4-simple_query_string-und-feldgewichtung">Teil 4: simple_query_string und Feldgewichtung</h3>
+<p><strong>Ziel:</strong> Eine Eingabe über mehrere Felder schicken, ohne dass ein schiefes Zeichen den Server mit HTTP 400 antworten lässt.</p>
+<ol>
+<li>
+<p><strong>Mehrfeldsuche mit Gewichtung.</strong> Sucht nach <code>Googlebot presentations</code> gleichzeitig in <code>request</code>, <code>agent</code> und <code>referrer</code>. Der Pfad soll dreifach zählen. Verknüpft die Wörter zuerst mit <code>or</code>, dann mit <code>and</code>.
+<strong>Selbstcheck:</strong> 2.840 und 32 Treffer.</p>
+</li>
+<li>
+<p><strong>Die Robustheit prüfen.</strong> Schickt die kaputte Eingabe <code>Windows AND (Firefox</code> ab, mit der öffnenden Klammer, die nie geschlossen wird. Führt dieselbe Eingabe einmal als <code>simple_query_string</code> und einmal als <code>query_string</code> aus.
+<strong>Selbstcheck:</strong> 5.164 Treffer gegenüber HTTP 400 mit einer <code>parse_exception</code>.
+<strong>Frage:</strong> Welche Konsequenz hat dieser Unterschied für ein Suchfeld, in das echte Menschen tippen?</p>
+</li>
+<li>
+<p><strong>Der überraschende Teil.</strong> Schickt nun die syntaktisch einwandfreie Eingabe <code>Windows AND Firefox</code> an beide Query-Typen.
+<strong>Selbstcheck:</strong> <code>query_string</code> liefert 1.085, <code>simple_query_string</code> weiterhin 5.164.
+<strong>Frage:</strong> Nichts ist abgestürzt, und trotzdem sind es fünfmal so viele Treffer. Was hat <code>simple_query_string</code> mit dem Wort <code>AND</code> gemacht?</p>
+</li>
+<li>
+<p><strong>Die eigene Syntax.</strong> <code>simple_query_string</code> versteht <code>+</code>, <code>-</code>, <code>|</code> und <code>~</code>. Probiert <code>presentations +Googlebot</code> und, mit <code>and</code> als Voreinstellung, <code>Firefox -Windows</code>. Sucht abschließend nach <code>Firefx</code> und danach nach <code>Firefx~</code>.
+<strong>Selbstcheck:</strong> 32, dann 1.777, dann 0 und 2.862.
+<strong>Frage:</strong> Welche dieser Sonderzeichen wollt ihr Endnutzern zumuten? Sucht in der Dokumentation, wie sich einzelne davon abschalten lassen.</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<p>Die Feldgewichtung schreibt ihr direkt in die Feldliste: <code>&quot;fields&quot;: [&quot;request^3&quot;, &quot;agent&quot;, &quot;referrer&quot;]</code>. Die Verknüpfung steuert bei beiden Query-Typen <code>default_operator</code>.
+<code>query_string</code> hat dieselbe Struktur wie <code>simple_query_string</code>, nur den anderen Namen - Aufgabe 2 und 3 löst ihr also mit fast identischen Aufrufen.
+Für Aufgabe 4 lohnt der Blick auf den Parameter <code>flags</code>.</p>
+</details>
+<hr>
+<h3 id="teil-5-bedingungen-kombinieren-mit-bool">Teil 5: Bedingungen kombinieren mit bool</h3>
+<p><strong>Ziel:</strong> Suche und harte Filter in einer Query verbinden.</p>
+<p>Szenario: Ihr sucht fehlgeschlagene Zugriffe auf Blog-Seiten, aber ohne die Suchmaschinen-Bots. Baut dafür eine <code>bool</code>-Query mit diesen Bedingungen:</p>
+<table>
+<thead>
+<tr>
+<th>Klausel</th>
+<th>Bedingung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pflicht, mit Score</td>
+<td><code>blog</code> im <code>request</code></td>
+</tr>
+<tr>
+<td>Pflicht, ohne Score</td>
+<td><code>response</code> ab 400</td>
+</tr>
+<tr>
+<td>Ausschluss</td>
+<td><code>Googlebot</code> im <code>agent</code></td>
+</tr>
+</tbody>
+</table>
+<p>Lasst euch nur <code>request</code>, <code>response</code> und <code>clientip</code> ausgeben.</p>
+<p><strong>Selbstcheck:</strong> 28 Treffer. Zum Vergleich: die Pflichtbedingung allein ergibt 1.967, zusammen mit dem Filter 31.</p>
+<p><strong>Fragen zum Erkunden:</strong></p>
+<ul>
+<li>Warum gehört der Status in den Filter, die Pfadsuche aber nicht? Nennt zwei Gründe.</li>
+<li>Verschiebt die Pfadsuche testweise ebenfalls in die <code>filter</code>-Klausel und schaut auf den <code>_score</code> der Treffer. Was fällt auf, und wann stört euch das?</li>
+<li>Ersetzt den Ausschluss durch das Google-Netz aus Teil 2, also <code>66.249.64.0/19</code> auf <code>clientip</code>. <strong>Selbstcheck:</strong> ebenfalls 28 Treffer. Welche der beiden Varianten würdet ihr in einem Dashboard fest verdrahten?</li>
+</ul>
+<p><strong>Zusatz:</strong> Ergänzt eine optionale Klausel, die Treffer mit <code>tags</code> im Pfad nach oben zieht, ohne sie zur Bedingung zu machen.
+<strong>Selbstcheck:</strong> Die Trefferzahl bleibt bei 28, aber die Rangfolge sortiert sich ab Platz 2 neu.
+<strong>Frage:</strong> Warum bleibt die Trefferzahl gleich? Was müsstet ihr ergänzen, damit die optionale Klausel doch zur Pflicht wird?</p>
+<details>
+<summary>Hinweis</summary>
+<p>Die vier Klauseln der <code>bool</code>-Query heißen <code>must</code>, <code>filter</code>, <code>must_not</code> und <code>should</code>. Jede nimmt ein Array von Queries entgegen.
+Für die letzte Frage sucht in der Dokumentation nach <code>minimum_should_match</code>.</p>
+</details>
+<hr>
+<h3 id="teil-6-highlighting-und-did-you-mean">Teil 6: Highlighting und Did-you-mean</h3>
+<p><strong>Ziel:</strong> Treffer in der Oberfläche begründen und Tippfehler vorschlagen - ohne das Mapping zu ändern.</p>
+<ol>
+<li>
+<p><strong>Treffer markieren.</strong> Sucht mit <code>match</code> im Feld <code>request</code> nach <code>presentations</code> und lasst euch das Feld highlighten. Setzt <code>&quot;size&quot;: 3</code> und <code>&quot;_source&quot;: [&quot;request&quot;]</code>.
+<strong>Selbstcheck:</strong> 2.306 Treffer. In <code>hits.hits[]._source.request</code> steht der Pfad unverändert, in <code>hits.hits[].highlight.request</code> dieselbe Zeile mit <code>&lt;em&gt;presentations&lt;/em&gt;</code>.
+<strong>Frage:</strong> Warum liegt <code>highlight</code> neben <code>query</code> und nicht darin? Was würde passieren, wenn ihr <code>&quot;size&quot;: 0</code> setzt - und warum?</p>
+</li>
+<li>
+<p><strong>Tags fürs Frontend.</strong> Wiederholt die Suche, ersetzt die Default-Tags durch <code>***</code> davor und danach und setzt <code>number_of_fragments</code> auf <code>0</code>.
+<strong>Selbstcheck:</strong> Im Highlight steht <code>/***presentations***/</code> (oder mit euren Tags um das Wort). Der Rest des Pfads bleibt stehen, weil Fragmente 0 das ganze Feld zurückgeben.</p>
+</li>
+<li>
+<p><strong>Did-you-mean auf dem Pfad.</strong> Schickt den Tippfehler <code>presentaton</code> an einen Term-Suggester auf dem Feld <code>request</code>. Eine <code>query</code> braucht ihr nicht.
+<strong>Selbstcheck:</strong> Zwei Vorschläge: <code>presentation</code> (freq 5) und <code>presentations</code> (freq 2.306).
+<strong>Frage:</strong> Welchen Vorschlag würdet ihr in der Oberfläche zeigen, und welche Zahl in der Antwort begründet das? Warum ist der Text in den Options kleingeschrieben, obwohl in den Logs <code>presentations</code> steht?</p>
+</li>
+<li>
+<p><strong>Did-you-mean auf dem User-Agent.</strong> Wiederholt den Suggester mit <code>firefx</code> auf dem Feld <code>agent</code>.
+<strong>Selbstcheck:</strong> Ein Vorschlag: <code>firefox</code> mit freq 2.779.
+Probiert danach das korrekt geschriebene <code>firefox</code>. <strong>Selbstcheck:</strong> <code>options</code> ist leer.
+<strong>Frage:</strong> Welcher <code>suggest_mode</code> steckt hinter diesem Default, und wann wäre <code>always</code> die bessere Wahl?</p>
+</li>
+<li>
+<p><strong>Autocomplete ohne Extra-Mapping.</strong> Sucht mit <code>match_phrase_prefix</code> im Feld <code>request</code> nach <code>presen</code> und begrenzt <code>max_expansions</code> auf 10.
+<strong>Selbstcheck:</strong> wieder 2.306 Treffer - dieselbe Menge wie die fertig getippte Suche nach <code>presentations</code>.
+<strong>Frage:</strong> Warum eignet sich das für eine erste Demo, aber nicht für ein Dropdown unter dem Suchfeld eines großen Index?</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<p><code>highlight</code> ist ein Geschwister von <code>query</code> im Request-Body. Die Default-Tags sind <code>&lt;em&gt;</code> und <code>&lt;/em&gt;</code>; eigene Tags setzt ihr mit <code>pre_tags</code> und <code>post_tags</code> als Arrays.
+Der Term-Suggester lebt unter <code>suggest</code> und braucht nur <code>text</code> plus <code>term.field</code>. Die Options kommen aus den Tokens des Feldes, deshalb kleingeschrieben.
+<code>match_phrase_prefix</code> analysiert wie <code>match</code>, erlaubt dem letzten Token aber, unvollständig zu sein.</p>
+</details>
+<hr>
+<h2 id="bonusaufgaben">Bonusaufgaben</h2>
+<h3 id="bonus-1-urls-sinnvoll-durchsuchbar-machen">Bonus 1: URLs sinnvoll durchsuchbar machen</h3>
+<p>In Teil 3 habt ihr gesehen, dass eine Suche nach <code>png</code> nur 803 von 2.332 Bilddateien findet, weil im Index Tokens wie <code>googledotcom.png</code> als Ganzes stehen. Der Standard-Analyzer ist für Fließtext gebaut, nicht für Pfade.</p>
+<ul>
+<li>Lasst euch die Tokens von <code>/presentations/logstash-monitorama-2013/</code>, <code>/blog/tags/puppet?flav=rss20</code> und <code>/style2.css</code> zeigen. Welche Bestandteile einer URL überleben die Analyse, welche nicht?</li>
+<li>Sammelt Lösungsansätze und bewertet sie. Denkbar sind mindestens vier: der <code>path_hierarchy</code>-Tokenizer, ein eigener Analyzer mit <code>pattern_replace</code>-Zeichenfilter, eine Zerlegung in Zeichen-N-Gramme und schlicht <code>prefix</code> oder <code>wildcard</code> auf dem vorhandenen <code>keyword</code>-Feld.</li>
+<li>Diskutiert je Ansatz: Was kostet er an Indexgröße, an Suchzeit und an Pflegeaufwand? Welcher davon beantwortet die Frage &quot;alle Requests unterhalb von <code>/blog/tags/</code>&quot; am günstigsten? Prüft eure Antwort mit einer Query gegen die 1.026 Treffer aus Teil 3.</li>
+<li>Ein Wort zur Wildcard-Variante: Sie funktioniert, aber warum ist ein führendes <code>*</code> auf einem großen Index eine schlechte Idee?</li>
+</ul>
+<h3 id="bonus-2-tippfehler-verzeihen">Bonus 2: Tippfehler verzeihen</h3>
+<p><code>simple_query_string</code> findet <code>Firefx</code> nur mit angehängter Tilde. Die <code>match</code>-Query kann dasselbe, wenn man sie darum bittet - und übertreibt es dabei gern.</p>
+<ul>
+<li>Sucht im Feld <code>agent</code> nach <code>Firefx</code>, <code>Googlebo</code> und <code>Chrom</code>, jeweils einmal normal und einmal mit unscharfer Suche und <code>&quot;fuzziness&quot;: &quot;AUTO&quot;</code>.
+<strong>Selbstcheck:</strong> ohne Fuzziness dreimal 0 Treffer, mit Fuzziness 2.779, 686 und 3.177.</li>
+<li>Der mittlere Wert ist der interessante: Das korrekt geschriebene <code>Googlebot</code> liefert nur 544 Treffer, die unscharfe Suche nach <code>Googlebo</code> aber 686. Findet heraus, welche Editierdistanz <code>AUTO</code> bei acht Zeichen erlaubt, und vergleicht mit der ausdrücklichen Variante <code>Googlebo~1</code> in einem <code>simple_query_string</code>. <strong>Selbstcheck:</strong> Damit fallt ihr auf die 544 der exakten Suche zurück.</li>
+<li>Sucht zum Abschluss nach <code>Mac</code>, einmal exakt und einmal unscharf. Der Unterschied beträgt genau ein Dokument. Warum ist unscharfe Suche bei kurzen Wörtern besonders heikel?</li>
+<li>Was kostet unscharfe Suche, und warum schaltet man sie nicht generell ein? Denkt an die Zahl der Terme, die OpenSearch dabei prüfen muss.</li>
+</ul>
+<h3 id="bonus-3-warum-steht-dieser-treffer-oben">Bonus 3: Warum steht dieser Treffer oben?</h3>
+<p>Lasst euch zur Suche nach <code>presentations</code> im Feld <code>request</code> die Score-Berechnung erklären, entweder mit <code>&quot;explain&quot;: true</code> in der Suche oder über die <code>_explain</code>-API für ein einzelnes Dokument.</p>
+<ul>
+<li>Findet die drei Bestandteile wieder, aus denen BM25 den Score bildet.</li>
+<li>Sortiert die Treffer einmal absteigend und einmal aufsteigend nach <code>_score</code>. Ganz oben steht <code>/presentations/</code> mit 0.956, ganz unten ein sehr langer Pfad mit 0.047. Das Suchwort kommt in beiden genau einmal vor - welcher Faktor erzeugt dann den Unterschied von Faktor 20?</li>
+<li>Verschiebt dieselbe Query in eine <code>filter</code>-Klausel und schaut erneut auf den Score. Erklärt das Ergebnis mit dem Unterschied zwischen Query Context und Filter Context.</li>
+<li>Überlegt, was das für die Feldgewichtung aus Teil 4 bedeutet: Warum gewinnen kurze Pfade dort systematisch gegen lange?</li>
+</ul>
+<h3 id="bonus-4-die-10000er-grenze">Bonus 4: Die 10.000er-Grenze</h3>
+<p>Der Index enthält 10.012 Dokumente und ist damit gerade groß genug für eine Grenze, über die viele erst in Produktion stolpern.</p>
+<ul>
+<li>Fordert mit <code>from</code> und <code>size</code> die Treffer ab Position 9.990 an.
+<strong>Selbstcheck:</strong> HTTP 400 mit der Meldung <code>Result window is too large, from + size must be less than or equal to: [10000]</code>.</li>
+<li>Schaut euch bei einer beliebigen Suche den Block <code>hits.total</code> genau an. Ohne Zutun steht dort <code>&quot;value&quot;: 10000</code> und <code>&quot;relation&quot;: &quot;gte&quot;</code>, mit <code>track_total_hits</code> dagegen <code>10012</code> und <code>&quot;eq&quot;</code>. Was heißt das für eine Trefferanzeige im Frontend, und was kostet die exakte Zählung?</li>
+<li>Recherchiert die beiden sauberen Wege durch große Ergebnismengen: <code>search_after</code> in Verbindung mit einem Point in Time sowie die Scroll-API. Welcher davon eignet sich für eine Ergebnisseite, welcher für einen Export?</li>
+<li>Warum ist die Grenze überhaupt gesetzt? Überlegt, was ein Koordinator-Knoten bei <code>from: 100000</code> von jedem Shard anfordern müsste.</li>
+</ul>
+<h3 id="bonus-5-completion-suggester-für-ein-dropdown">Bonus 5: Completion-Suggester für ein Dropdown</h3>
+<p><code>match_phrase_prefix</code> liefert Dokumente. Ein Suchfeld mit zehn Vorschlägen braucht eine andere Datenstruktur: den Feldtyp <code>completion</code> und einen FST im Heap.</p>
+<ul>
+<li>Legt einen kleinen Index <code>demo-suggest</code> mit einem Feld <code>suggest</code> vom Typ <code>completion</code> an. Indexiert drei Dokumente mit <code>input</code> und <code>weight</code>, zum Beispiel <code>Kartoffelsuppe</code> (10), <code>Kartoffelsalat</code> (8) und <code>Karottenkuchen</code> (5).</li>
+<li>Fragt mit Prefix <code>Kar</code> und <code>size: 5</code> nach. <strong>Selbstcheck:</strong> Die Antwort steht unter <code>suggest</code>, <code>hits</code> ist leer. Der Eintrag mit dem höchsten <code>weight</code> steht oben.</li>
+<li>Ändert ein <code>weight</code> und wiederholt die Anfrage. Was passiert mit der Reihenfolge?</li>
+<li>Löscht den Index hinterher wieder: <code>DELETE demo-suggest</code>.</li>
+<li><strong>Frage:</strong> Warum eignet sich dieser Typ für Produktnamen, aber nicht für den vollen Text der Apache-Logs? Denkt an den Heap.</li>
+</ul>
+<hr>
+<h2 id="erwartete-ergebnisse">Erwartete Ergebnisse</h2>
+<ul>
+<li>Ihr wählt zu einem Feldtyp den passenden Query-Typ, ohne raten zu müssen</li>
+<li>Ihr könnt erklären, warum <code>term</code> auf <code>request</code> scheitert und auf <code>verb</code> funktioniert</li>
+<li>Ihr könnt an Tokens belegen, warum die Suche nach <code>png</code> zwei Drittel der Bilder verfehlt</li>
+<li>Ihr kennt den Unterschied zwischen <code>simple_query_string</code> und <code>query_string</code> aus eigener Anschauung</li>
+<li>Eine <code>bool</code>-Query mit Pflicht, Filter, Ausschluss und Bevorzugung liegt fertig in eurer Console</li>
+<li>Ihr wisst, warum <code>exists</code> auf einem <code>text</code>-Feld lügen kann</li>
+<li>Ihr könnt Treffer mit <code>highlight</code> markieren und Tippfehler mit einem Term-Suggester vorschlagen</li>
+</ul>
+<hr>
+<h2 id="wiederholung">Wiederholung</h2>
+<h3 id="welche-query-zu-welchem-feld">Welche Query zu welchem Feld?</h3>
+<table>
+<thead>
+<tr>
+<th>Feld im Index</th>
+<th>Typ</th>
+<th>Passende Query</th>
+<th>Beispiel aus dieser Übung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>verb</code>, <code>httpversion</code>, <code>auth</code></td>
+<td><code>keyword</code></td>
+<td><code>term</code>, <code>terms</code></td>
+<td><code>verb</code> ist <code>GET</code> -&gt; 9.963</td>
+</tr>
+<tr>
+<td><code>response</code>, <code>bytes</code></td>
+<td><code>integer</code>, <code>long</code></td>
+<td><code>term</code>, <code>range</code></td>
+<td><code>response</code> ab 400 -&gt; 220</td>
+</tr>
+<tr>
+<td><code>@timestamp</code></td>
+<td><code>date</code></td>
+<td><code>range</code></td>
+<td>ein Tagesfenster</td>
+</tr>
+<tr>
+<td><code>clientip</code></td>
+<td><code>ip</code></td>
+<td><code>term</code> mit Einzelwert oder CIDR</td>
+<td><code>66.249.64.0/19</code> -&gt; 574</td>
+</tr>
+<tr>
+<td><code>request</code>, <code>agent</code>, <code>referrer</code></td>
+<td><code>text</code></td>
+<td><code>match</code>, <code>match_phrase</code>, <code>simple_query_string</code></td>
+<td><code>presentations</code> -&gt; 2.306</td>
+</tr>
+<tr>
+<td><code>request.keyword</code> und Co.</td>
+<td><code>keyword</code>-Unterfeld</td>
+<td><code>term</code>, <code>prefix</code>, <code>wildcard</code>, Aggregationen</td>
+<td><code>/blog/tags/</code> als Präfix -&gt; 1.026</td>
+</tr>
+</tbody>
+</table>
+<p><code>agent</code> ist das einzige Textfeld ohne <code>.keyword</code>-Unterfeld. Volltextsuche ja, Aggregation und exakter Vergleich nein - dafür gibt es die geparsten <code>user_agent.*</code>-Felder.</p>
+<h3 id="was-der-standard-analyzer-mit-urls-macht">Was der Standard-Analyzer mit URLs macht</h3>
+<p>Gemessen am Feld <code>request</code> dieses Index:</p>
+<table>
+<thead>
+<tr>
+<th>Eingabe</th>
+<th>Tokens</th>
+<th>Anmerkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/blog/geekery/index?page=42</code></td>
+<td><code>blog</code>, <code>geekery</code>, <code>index</code>, <code>page</code>, <code>42</code></td>
+<td>Trennzeichen verschwinden vollständig</td>
+</tr>
+<tr>
+<td><code>/wp-admin/</code></td>
+<td><code>wp</code>, <code>admin</code></td>
+<td>der Bindestrich trennt</td>
+</tr>
+<tr>
+<td><code>/images/jordan-80.png</code></td>
+<td><code>images</code>, <code>jordan</code>, <code>80</code>, <code>png</code></td>
+<td>nach der Zahl wird getrennt</td>
+</tr>
+<tr>
+<td><code>/images/googledotcom.png</code></td>
+<td><code>images</code>, <code>googledotcom.png</code></td>
+<td>Wort-Punkt-Wort bleibt zusammen</td>
+</tr>
+<tr>
+<td><code>/style2.css</code></td>
+<td><code>style2</code>, <code>css</code></td>
+<td>Ziffer im Wort trennt nicht, der Punkt danach schon</td>
+</tr>
+</tbody>
+</table>
+<p>Daraus folgt die Falle aus Teil 3: <code>match png</code> findet nur die Pfade, in denen <code>png</code> als eigenes Token gelandet ist.</p>
+<h3 id="match-simple_query_string-und-query_string">match, simple_query_string und query_string</h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th><code>match</code></th>
+<th><code>simple_query_string</code></th>
+<th><code>query_string</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Felder</td>
+<td>genau eines</td>
+<td>mehrere</td>
+<td>mehrere</td>
+</tr>
+<tr>
+<td>Feldgewichtung</td>
+<td>nein, dafür <code>multi_match</code></td>
+<td>ja, mit <code>^</code></td>
+<td>ja, mit <code>^</code></td>
+</tr>
+<tr>
+<td>Verknüpfung</td>
+<td><code>operator</code></td>
+<td><code>default_operator</code> sowie <code>+</code>, <code>-</code>, <code>|</code></td>
+<td><code>default_operator</code> und volle Syntax</td>
+</tr>
+<tr>
+<td><code>AND</code> und <code>OR</code> als Wort</td>
+<td>wird als Suchwort behandelt</td>
+<td>wird als Suchwort behandelt</td>
+<td>echte Operatoren</td>
+</tr>
+<tr>
+<td>Kaputte Syntax</td>
+<td>kann nicht auftreten</td>
+<td>wird ignoriert, Suche läuft</td>
+<td>HTTP 400, <code>parse_exception</code></td>
+</tr>
+<tr>
+<td>Tippfehler</td>
+<td>mit <code>fuzziness</code> verzeihbar</td>
+<td>mit <code>~</code> verzeihbar</td>
+<td>mit <code>~</code> verzeihbar</td>
+</tr>
+<tr>
+<td>Einsatz</td>
+<td>Suche aus dem Programm heraus</td>
+<td>Suchfeld für Endnutzer</td>
+<td>Experten- und Admin-Suche</td>
+</tr>
+</tbody>
+</table>
+<h3 id="klauseln-der-bool-query">Klauseln der bool-Query</h3>
+<table>
+<thead>
+<tr>
+<th>Klausel</th>
+<th>Score?</th>
+<th>Funktion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>must</code></td>
+<td>ja</td>
+<td>muss zutreffen und beeinflusst das Ranking</td>
+</tr>
+<tr>
+<td><code>should</code></td>
+<td>ja</td>
+<td>optional, hebt passende Treffer nach oben</td>
+</tr>
+<tr>
+<td><code>filter</code></td>
+<td>nein</td>
+<td>muss zutreffen, wird zwischengespeichert</td>
+</tr>
+<tr>
+<td><code>must_not</code></td>
+<td>nein</td>
+<td>darf nicht zutreffen</td>
+</tr>
+</tbody>
+</table>
+<p>Sobald <code>must</code> oder <code>filter</code> gesetzt sind, ist <code>should</code> reiner Score-Bonus. Ohne beide muss mindestens eine <code>should</code>-Klausel zutreffen. Steuern lässt sich das mit <code>minimum_should_match</code>.</p>
+<h3 id="highlighting-und-suggester">Highlighting und Suggester</h3>
+<table>
+<thead>
+<tr>
+<th>Ziel</th>
+<th>Block im Request</th>
+<th>Mapping nötig?</th>
+<th>Typische Antwort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Treffer in der Oberfläche markieren</td>
+<td><code>highlight</code> neben <code>query</code></td>
+<td>nein (Default <code>unified</code>)</td>
+<td><code>hits.hits[].highlight</code> mit <code>&lt;em&gt;</code></td>
+</tr>
+<tr>
+<td>Did-you-mean nach der Suche</td>
+<td><code>suggest</code> + <code>term</code></td>
+<td>nein, Tokens des <code>text</code>-Feldes</td>
+<td><code>options</code> mit <code>text</code>, <code>score</code>, <code>freq</code></td>
+</tr>
+<tr>
+<td>Autocomplete ohne Extra-Index</td>
+<td><code>match_phrase_prefix</code></td>
+<td>nein</td>
+<td>normale <code>hits</code> (Dokumente)</td>
+</tr>
+<tr>
+<td>Autocomplete als Dropdown</td>
+<td><code>suggest</code> + <code>completion</code></td>
+<td>ja, Feldtyp <code>completion</code></td>
+<td><code>suggest</code>, <code>hits</code> leer</td>
+</tr>
+</tbody>
+</table>
+<p>Default-Tags sind <code>&lt;em&gt;</code> / <code>&lt;/em&gt;</code>. <code>number_of_fragments: 0</code> gibt das ganze Feld zurück. Der Term-Suggester schweigt bei korrekt geschriebenen Wörtern (<code>suggest_mode: missing</code>).</p>
+<hr>
+<h2 id="tipps--ressourcen">Tipps &amp; Ressourcen</h2>
+<h3 id="vorgehen">Vorgehen</h3>
+<ul>
+<li>Vor jeder Suche kurz überlegen: Welches Feld, welcher Typ, welcher Analyzer? Die halbe Fehlersuche erledigt sich damit</li>
+<li>Null Treffer sind selten ein Serverproblem und fast immer eine Typfrage - erst <code>_analyze</code> aufrufen, dann die Query umbauen</li>
+<li><code>filter</code> statt <code>must</code> für Ja/Nein-Bedingungen spart Score-Berechnung und ist zwischenspeicherbar</li>
+<li><code>_source</code> auf wenige Felder begrenzen, sonst scrollt ihr in den Dev Tools mehr als ihr lest</li>
+<li>Bei Zeitfenstern immer an die Zeitzone denken: Im Index steht UTC, eure Erwartung ist meist lokale Zeit</li>
+<li>Highlighting braucht die Fetch-Phase - nicht mit <code>&quot;size&quot;: 0</code> kombinieren</li>
+<li>Für ein Dropdown unter dem Suchfeld den Completion-Suggester nehmen, nicht eine Prefix-Query auf dem ganzen Logindex</li>
+</ul>
+<h3 id="weiterführend">Weiterführend</h3>
+<ul>
+<li><a href="https://docs.opensearch.org/latest/query-dsl/query-filter-context/">Query und Filter Context</a></li>
+<li><a href="https://docs.opensearch.org/latest/query-dsl/term/term/">term</a> und <a href="https://docs.opensearch.org/latest/query-dsl/term/terms/">terms</a></li>
+<li><a href="https://docs.opensearch.org/latest/query-dsl/term/range/">range</a> und <a href="https://docs.opensearch.org/latest/query-dsl/term/exists/">exists</a></li>
+<li><a href="https://docs.opensearch.org/latest/query-dsl/term/prefix/">prefix</a> und <a href="https://docs.opensearch.org/latest/query-dsl/term/wildcard/">wildcard</a></li>
+<li><a href="https://docs.opensearch.org/latest/query-dsl/full-text/match/">match</a> und <a href="https://docs.opensearch.org/latest/query-dsl/full-text/match-phrase/">match_phrase</a></li>
+<li><a href="https://docs.opensearch.org/latest/query-dsl/full-text/simple-query-string/">simple_query_string</a> und <a href="https://docs.opensearch.org/latest/query-dsl/full-text/query-string/">query_string</a></li>
+<li><a href="https://docs.opensearch.org/latest/query-dsl/compound/bool/">Bool Query</a></li>
+<li><a href="https://docs.opensearch.org/latest/mappings/supported-field-types/ip/">IP-Feldtyp</a></li>
+<li><a href="https://docs.opensearch.org/latest/api-reference/analyze-apis/">Analyze API</a></li>
+<li><a href="https://docs.opensearch.org/latest/analyzers/tokenizers/path-hierarchy/">path_hierarchy-Tokenizer</a></li>
+<li><a href="https://docs.opensearch.org/latest/search-plugins/searching-data/paginate/">Paginierung großer Ergebnismengen</a></li>
+<li><a href="https://docs.opensearch.org/latest/search-plugins/searching-data/highlight/">Highlight query matches</a></li>
+<li><a href="https://docs.opensearch.org/latest/search-plugins/searching-data/autocomplete/">Autocomplete</a></li>
+<li><a href="https://docs.opensearch.org/latest/search-plugins/searching-data/did-you-mean/">Did-you-mean</a></li>
+<li><a href="https://docs.opensearch.org/latest/mappings/supported-field-types/completion/">Completion field type</a></li>
+<li><a href="https://docs.opensearch.org/latest/query-dsl/full-text/match-phrase-prefix/">match_phrase_prefix</a></li>
+</ul>
+
+</body>
+</html>
