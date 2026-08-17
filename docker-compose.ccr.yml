@@ -1,0 +1,62 @@
+# Cross-Cluster-Replication-Workshop (Uebung 10)
+#
+# Dieser Overlay ergaenzt den bestehenden 2-Node-Leader-Cluster um einen
+# eigenstaendigen Ein-Node-Follower-Cluster. Er gehoert fest zum Branch
+# "workshop-ccr" und wird NICHT ueber ein Compose-Profil, sondern als
+# zusaetzliche Compose-Datei gestartet:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.ccr.yml up -d
+#
+# Beide Cluster teilen sich das Netzwerk "opensearch-net" und dasselbe
+# gebaute Image (Dockerfile). Weil das Image die identische Demo-Security-
+# Konfiguration mit denselben Demo-Zertifikaten enthaelt, vertrauen sich
+# Leader und Follower auf der Transport-Ebene (Port 9300) ohne weitere
+# Zertifikatsarbeit - Voraussetzung dafuer, dass CCR ueberhaupt funktioniert.
+#
+# Leader   : opensearch-node1/2, cluster.name=opensearch-cluster, HTTP 9200
+# Follower : opensearch-follower1, cluster.name=opensearch-follower, HTTP 9202
+services:
+  opensearch-follower1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: opensearch-follower1
+    environment:
+      - cluster.name=opensearch-follower
+      - node.name=opensearch-follower1
+      # Eigenstaendiger Ein-Node-Cluster. node.roles wird bewusst NICHT gesetzt,
+      # damit die Rolle remote_cluster_client (fuer CCR noetig) erhalten bleibt.
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m  # kleiner Heap reicht fuer den Demo-Index
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_PASSWORD}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-follower-data:/usr/share/opensearch/data
+    ports:
+      - 9202:9200
+    networks:
+      - opensearch-net
+
+  # Optionale zweite Dashboards-Instanz gegen den Follower, damit sich der
+  # schreibgeschuetzte Index in Discover zeigen laesst (http://localhost:5602).
+  opensearch-dashboards-follower:
+    image: opensearchproject/opensearch-dashboards:3.7.0
+    container_name: opensearch-dashboards-follower
+    ports:
+      - 5602:5601
+    environment:
+      OPENSEARCH_HOSTS: '["https://opensearch-follower1:9200"]'
+    depends_on:
+      - opensearch-follower1
+    networks:
+      - opensearch-net
+
+volumes:
+  opensearch-follower-data:
