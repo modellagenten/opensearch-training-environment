@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>uebung-05-ism-policy.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="übung-5-index-state-management-ism---lebenszyklus-automatisieren-logging">Übung 5: Index State Management (ISM) - Lebenszyklus automatisieren [Logging]</h1>
+<h2 id="einleitung">Einleitung</h2>
+<p>In Logging-Szenarien wachsen Indizes jeden Tag. Ohne Lebenszyklus laufen Platten voll, und niemand löscht von Hand. Index State Management automatisiert das: Neue Daten landen im aktiven Index, ältere werden komprimiert und schreibgeschützt, ganz alte verschwinden.</p>
+<p>Der wichtigste Satz zuerst, weil er alles andere erklärt: <strong>ISM arbeitet im Takt, nicht kontinuierlich.</strong> Ein Hintergrundjob sieht in festen Abständen nach, was zu tun ist, und führt pro Durchlauf genau <strong>einen</strong> Schritt aus. Wer das nicht weiß, wartet in der Schulung eine Dreiviertelstunde auf einen Index, der laut Policy nach fünf Minuten weg sein müsste. Ihr stellt den Takt deshalb gleich zu Beginn auf Zeitraffer.</p>
+<p>Ihr bekommt Ziele und Zahlen zum Selbstcheck, die Konfiguration baut ihr selbst. Hinweise stehen aufklappbar unter den Aufgaben, vier Bonusaufgaben am Ende.</p>
+<h2 id="lernziele">Lernziele</h2>
+<ul>
+<li>Eine ISM Policy aus States, Actions und Transitions aufbauen</li>
+<li>Rollover mit Alias und Write-Index einrichten und die Namenskonvention begründen</li>
+<li>Den Job-Takt von ISM verstehen und den Lebenszyklus im Zeitraffer beobachten</li>
+<li>Die Ausgabe von <code>explain</code> lesen: State, Action, Step und die erfüllte Bedingung</li>
+<li>Erkennen, dass eine zugewiesene Policy eingefroren ist, und sie gezielt aktualisieren</li>
+<li>Eine Policy vollständig zurückbauen, damit der Cluster nicht weiterarbeitet</li>
+</ul>
+<h2 id="voraussetzungen">Voraussetzungen</h2>
+<ul>
+<li>Übung 2 abgeschlossen, die Docker-Schulungsumgebung läuft mit Cluster und Dashboards</li>
+<li>Dev Tools Console in OpenSearch Dashboards erreichbar</li>
+<li>Kenntnis der Apache-Log-Felder aus Übung 2 (<code>@timestamp</code>, <code>clientip</code>, <code>verb</code>, <code>request</code>, <code>response</code>, <code>bytes</code>)</li>
+<li>Rund 35 Minuten, davon etwa 10 Minuten Beobachtungszeit</li>
+</ul>
+<blockquote>
+<p><strong>Wichtig:</strong> Ihr ändert in Teil 1 eine Cluster-Einstellung. Das ist in eurer eigenen Schulungsumgebung unproblematisch, in einem geteilten Produktivcluster wäre es das nicht. In Teil 6 setzt ihr sie zurück.</p>
+</blockquote>
+<hr>
+<h2 id="aufgabe">Aufgabe</h2>
+<h3 id="teil-1-den-takt-von-ism-verstehen-5-min">Teil 1: Den Takt von ISM verstehen (5 Min.)</h3>
+<p><strong>Ziel:</strong> Bevor ihr eine Policy baut, wisst ihr, wann ISM überhaupt etwas tut - und warum das über Erfolg oder Frust dieser Übung entscheidet.</p>
+<ol>
+<li>
+<p><strong>Den Takt finden.</strong> Sucht in den Cluster-Einstellungen die beiden Werte, die steuern, wie oft der ISM-Job läuft und wie stark der Zeitpunkt streut.
+<strong>Selbstcheck:</strong> <code>plugins.index_state_management.job_interval</code> steht auf <code>5</code> (Minuten), <code>plugins.index_state_management.jitter</code> auf <code>0.6</code>. Zwischen zwei Läufen liegen also 5 bis 8 Minuten.
+<strong>Nebenbei:</strong> Beim <code>job_interval</code> findet ihr zwei Einträge, einmal mit <code>plugins.</code> und einmal mit <code>opendistro.</code> davor. Das ist ein Erbe aus der Open-Distro-Zeit; verwendet durchgehend die <code>plugins.</code>-Variante.</p>
+</li>
+<li>
+<p><strong>Die Konsequenz durchdenken.</strong> Eure Policy wird gleich neun Schritte durchlaufen, bis ein Index gelöscht ist. Pro Job-Lauf wird genau ein Schritt ausgeführt.
+<strong>Frage:</strong> Wie lange dauert der Lebenszyklus mit dem Standardtakt - und wie lange bei einer Minute?
+<strong>Selbstcheck:</strong> Standard rund 45 bis 75 Minuten, im Zeitraffer rund 9 Minuten.</p>
+</li>
+<li>
+<p><strong>Zeitraffer einschalten.</strong> Setzt den Takt auf eine Minute und schaltet die Streuung ab.
+<strong>Selbstcheck:</strong> Die Antwort enthält <code>&quot;acknowledged&quot;: true</code>, und ein erneutes Auslesen zeigt beide Werte unter <code>persistent</code>.
+<strong>Frage:</strong> Was wäre der Unterschied, wenn ihr dieselben Werte unter <code>transient</code> statt <code>persistent</code> setzt? Welchen Block verwendet ihr in Produktion - und warum?</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<p>Alle ISM-Einstellungen mit ihren Standardwerten seht ihr über <code>GET _cluster/settings?include_defaults=true&amp;flat_settings=true</code> - die Ausgabe ist lang, sucht im Ergebnis nach <code>index_state_management</code>.</p>
+<p>Umstellen könnt ihr so:</p>
+<pre class="hljs"><code><div>PUT _cluster/settings
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;persistent&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;plugins.index_state_management.job_interval&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;plugins.index_state_management.jitter&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.0</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Kontrolle mit <code>GET _cluster/settings?flat_settings=true</code>.</p>
+<p><strong>persistent vs. transient:</strong> <code>persistent</code> überlebt einen Cluster-Neustart, <code>transient</code> nicht. Vorrang: transient vor persistent vor <code>opensearch.yml</code> vor Default. In Produktion <code>persistent</code> verwenden; transient kann bei Instabilität unerwartet verschwinden. Zurücksetzen mit <code>null</code>.</p>
+</details>
+<hr>
+<h3 id="teil-2-die-policy-bauen-7-min">Teil 2: Die Policy bauen (7 Min.)</h3>
+<p><strong>Ziel:</strong> Eine Policy, die einen Log-Index durch drei Zustände führt.</p>
+<p>Baut unter der ID <code>apache-log-lifecycle</code> eine Policy mit diesen Eigenschaften:</p>
+<ul>
+<li>Startzustand ist <code>hot</code></li>
+<li>In <code>hot</code> gibt es genau eine Action: <strong>Rollover, sobald der Index 5 Dokumente enthält.</strong> Bewusst nur diese eine Bedingung - warum, klärt Bonus 1</li>
+<li>Aus <code>hot</code> geht es nach <code>warm</code>, sobald der Index älter als 2 Minuten ist</li>
+<li>In <code>warm</code> werden die Lucene-Segmente auf <strong>ein</strong> Segment zusammengeführt</li>
+<li>Aus <code>warm</code> geht es nach <code>delete</code>, sobald der Index älter als 5 Minuten ist</li>
+<li>In <code>delete</code> wird der Index gelöscht</li>
+<li>Die Policy hängt sich über ein <code>ism_template</code> mit Priorität 100 automatisch an alle Indizes im Muster <code>apache-logs-ism-*</code></li>
+</ul>
+<p><strong>Selbstcheck:</strong> Die Antwort auf das <code>PUT</code> enthält <code>&quot;_id&quot;: &quot;apache-log-lifecycle&quot;</code> und <code>&quot;_version&quot;: 1</code>.</p>
+<p><strong>Frage zum Vormerken:</strong> In <code>warm</code> fehlt eine <code>read_only</code>-Action, obwohl der Index anschließend schreibgeschützt sein wird. Woher kommt der Schreibschutz? Die Antwort steht später in der <code>explain</code>-Ausgabe - achtet in Teil 5 auf die Namen der einzelnen Schritte.</p>
+<p><strong>Frage an die Runde:</strong> Warum arbeitet die Policy mit Minuten statt mit Tagen, und was würdet ihr in eurer eigenen Umgebung eintragen? Ein realistisches Muster für Webserver-Logs wäre Rollover bei 50 GB oder einem Tag, <code>warm</code> nach 7 Tagen, Löschung nach 90 Tagen.</p>
+<details>
+<summary>Hinweis</summary>
+<p>Das Grundgerüst einer Policy: <code>states</code> ist eine Liste, jeder State hat einen <code>name</code>, eine Liste <code>actions</code> und eine Liste <code>transitions</code>. Eine Transition nennt den <code>state_name</code> des Ziels und die <code>conditions</code>, unter denen gewechselt wird.</p>
+<pre class="hljs"><code><div>PUT _plugins/_ism/policies/apache-log-lifecycle
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;policy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Lebenszyklus für Apache Access Logs: hot -&gt; warm -&gt; delete&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;default_state&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;hot&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;states&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;hot&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;actions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;rollover&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;min_doc_count&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">5</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;transitions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;state_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;warm&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;conditions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;min_index_age&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2m&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;warm&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;actions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;force_merge&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;max_num_segments&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;transitions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;state_name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;delete&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;conditions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;min_index_age&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;5m&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;delete&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;actions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;delete&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;transitions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;ism_template&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;index_patterns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;apache-logs-ism-*&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;priority&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">100</span> <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Prüfen könnt ihr mit <code>GET _plugins/_ism/policies/apache-log-lifecycle</code>.</p>
+</details>
+<hr>
+<h3 id="teil-3-template-alias-und-startindex-5-min">Teil 3: Template, Alias und Startindex (5 Min.)</h3>
+<p><strong>Ziel:</strong> Rollover braucht drei Bausteine, die zusammenpassen müssen - ein Template, einen Alias und einen Index mit der richtigen Namensendung.</p>
+<ol>
+<li>
+<p><strong>Index Template anlegen.</strong> Erstellt ein Template <code>apache-logs-ism-template</code> für das Muster <code>apache-logs-ism-*</code>. Es soll das Mapping der Apache-Log-Felder mitbringen und über das Setting <code>plugins.index_state_management.rollover_alias</code> festlegen, dass der Rollover-Alias <code>apache-logs-ism</code> heißt.
+<strong>Frage:</strong> Warum steht der Alias-Name in den Index-Settings und nicht in der Policy?</p>
+</li>
+<li>
+<p><strong>Startindex mit Write-Alias anlegen.</strong> Legt <code>apache-logs-ism-000001</code> an und hängt den Alias <code>apache-logs-ism</code> als Write-Index daran.
+<strong>Selbstcheck:</strong> <code>GET _alias/apache-logs-ism</code> zeigt genau einen Index, und darin <code>&quot;is_write_index&quot;: true</code>.</p>
+</li>
+<li>
+<p><strong>Die Namenskonvention verstehen.</strong> Der Index heißt nicht zufällig <code>-000001</code>.
+<strong>Frage:</strong> Was müsste ISM bei einem Rollover mit einem Index namens <code>apache-logs-ism-hot</code> tun - und was kann es nicht? Formuliert die Regel in einem Satz.</p>
+</li>
+<li>
+<p><strong>Prüfen, ob ISM zugegriffen hat.</strong> Fragt den ISM-Status des neuen Index ab - und wiederholt den Aufruf ein paar Mal.
+<strong>Selbstcheck:</strong> Sofort nach dem Anlegen steht dort noch <strong>nichts</strong>: <code>policy_id</code> ist <code>null</code> und <code>total_managed_indices</code> ist <code>0</code>. Nach etwa 20 bis 30 Sekunden erscheint <code>&quot;index.plugins.index_state_management.policy_id&quot;: &quot;apache-log-lifecycle&quot;</code> - das <code>ism_template</code> hat gegriffen. Erst beim ersten Job-Lauf, also nach bis zu einer Minute, kommt die Meldung <code>Successfully initialized policy: apache-log-lifecycle</code> dazu, und der State <code>hot</code> erscheint.
+<strong>Frage:</strong> Was steht dagegen von der ersten Sekunde an in den Index-Settings? Schaut euch <code>GET apache-logs-ism-000001/_settings?flat_settings=true</code> an und überlegt, wer diesen Wert dort hineingeschrieben hat.</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<pre class="hljs"><code><div>PUT _index_template/apache-logs-ism-template
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;index_patterns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;apache-logs-ism-*&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;template&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;settings&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;number_of_shards&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;number_of_replicas&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;plugins.index_state_management.rollover_alias&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;apache-logs-ism&quot;</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;mappings&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;properties&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;@timestamp&quot;</span><span class="hljs-punctuation">:</span>  <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;date&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;clientip&quot;</span><span class="hljs-punctuation">:</span>    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ip&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;verb&quot;</span><span class="hljs-punctuation">:</span>        <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;keyword&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span>     <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;text&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;fields&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;keyword&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;keyword&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;httpversion&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;keyword&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span>    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;integer&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;bytes&quot;</span><span class="hljs-punctuation">:</span>       <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;long&quot;</span> <span class="hljs-punctuation">}</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<pre class="hljs"><code><div>PUT apache-logs-ism<span class="hljs-number">-000001</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;aliases&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;apache-logs-ism&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;is_write_index&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span> <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Der ISM-Status kommt über <code>GET _plugins/_ism/explain/apache-logs-ism-000001</code>.</p>
+<p>Zur Namenskonvention: Rollover zählt die Ziffernfolge am Ende des Indexnamens hoch. Ohne sie weiß ISM nicht, wie der nächste Index heißen soll.</p>
+</details>
+<hr>
+<h3 id="teil-4-rollover-auslösen-und-explain-lesen-8-min">Teil 4: Rollover auslösen und <code>explain</code> lesen (8 Min.)</h3>
+<p><strong>Ziel:</strong> Den Rollover gezielt herbeiführen und dabei lernen, die wichtigste Diagnoseausgabe von ISM zu lesen.</p>
+<ol>
+<li>
+<p><strong>Unter der Schwelle bleiben.</strong> Indexiert <strong>drei</strong> Log-Einträge über den <strong>Alias</strong>, nicht über den Indexnamen. Nutzt dafür einen einzigen <code>_bulk</code>-Aufruf statt einzelner Requests.
+<strong>Selbstcheck:</strong> <code>apache-logs-ism-000001</code> enthält 3 Dokumente, und auch nach zwei Minuten existiert kein zweiter Index.</p>
+</li>
+<li>
+<p><strong>Nachsehen, warum nichts passiert.</strong> Fragt <code>explain</code> ab und sucht den Block <code>info.conditions</code>.
+<strong>Selbstcheck:</strong> Dort steht <code>&quot;min_doc_count&quot;: {&quot;condition&quot;: 5, &quot;current&quot;: 3}</code>. ISM sagt euch also selbst, woran es noch fehlt - dieser Block ist euer wichtigstes Werkzeug bei jedem Rollover-Problem.</p>
+</li>
+<li>
+<p><strong>Die Schwelle erreichen.</strong> Indexiert zwei weitere Einträge über den Alias.
+<strong>Selbstcheck:</strong> Innerhalb einer Minute erscheint <code>apache-logs-ism-000002</code>. In <code>explain</code> steht für 000001 jetzt <code>&quot;rolled_over&quot;: true</code>, dazu <code>&quot;rolled_over_index_name&quot;: &quot;apache-logs-ism-000002&quot;</code> und die Meldung <code>Successfully rolled over index</code>.</p>
+</li>
+<li>
+<p><strong>Dem Alias folgen.</strong> Prüft, welcher Index jetzt der Write-Index ist, und schreibt ein weiteres Dokument über den Alias.
+<strong>Selbstcheck:</strong> <code>apache-logs-ism-000002</code> trägt <code>&quot;is_write_index&quot;: true</code>, <code>apache-logs-ism-000001</code> hängt weiterhin am Alias, aber ohne dieses Kennzeichen. Das neue Dokument landet in 000002, lesende Suchen über den Alias finden trotzdem alle sechs Dokumente.</p>
+</li>
+<li>
+<p><strong>Zeitstempel gegenprüfen.</strong> Eure Dokumente tragen <code>@timestamp</code>-Werte aus der Vergangenheit, trotzdem redet die Policy von Indexalter.
+<strong>Frage:</strong> Worauf bezieht sich <code>min_index_age</code> - auf die Zeitstempel in den Dokumenten oder auf etwas anderes? Sucht die Antwort in der <code>explain</code>-Ausgabe.
+<strong>Selbstcheck:</strong> Dort steht <code>index_creation_date</code>. ISM rechnet ausschließlich mit dem Erstellungszeitpunkt des Index; die Feldinhalte spielen keine Rolle.</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<p>Bulk über den Alias, drei Dokumente in einem Aufruf:</p>
+<pre class="hljs"><code><div>POST apache-logs-ism/_bulk
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;index&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;@timestamp&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2026-04-07T10:00:00Z&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;clientip&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;83.149.9.216&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;verb&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;GET&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;/index.html&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;httpversion&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;1.1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">200</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;bytes&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">12846</span><span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;index&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;@timestamp&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2026-04-07T10:00:05Z&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;clientip&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;198.46.149.143&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;verb&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;GET&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;/api/products&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;httpversion&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;1.1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">200</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;bytes&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">3420</span><span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;index&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;@timestamp&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2026-04-07T10:00:10Z&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;clientip&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;66.249.73.135&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;verb&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;GET&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;/images/logo.png&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;httpversion&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;1.1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">304</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;bytes&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0</span><span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Die zwei weiteren Dokumente für Schritt 3:</p>
+<pre class="hljs"><code><div>POST apache-logs-ism/_bulk
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;index&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;@timestamp&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2026-04-07T10:00:15Z&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;clientip&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;83.149.9.216&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;verb&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;POST&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;/api/login&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;httpversion&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;1.1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">401</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;bytes&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">58</span><span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;index&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;@timestamp&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2026-04-07T10:00:20Z&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;clientip&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;198.46.149.143&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;verb&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;GET&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;/old-page.html&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;httpversion&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;1.1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">404</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;bytes&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">209</span><span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Nützliche Abfragen: <code>GET _cat/indices/apache-logs-ism-*?v&amp;s=index</code>, <code>GET _alias/apache-logs-ism</code>, <code>GET apache-logs-ism/_count</code> und <code>GET _plugins/_ism/explain/apache-logs-ism-*</code>.</p>
+</details>
+<hr>
+<h3 id="teil-5-warm-und-delete-beobachten-7-min">Teil 5: Warm und Delete beobachten (7 Min.)</h3>
+<p><strong>Ziel:</strong> Die Zustandsmaschine bei der Arbeit sehen - und dabei die Frage aus Teil 2 beantworten.</p>
+<ol>
+<li>
+<p><strong>Im Minutentakt mitschreiben.</strong> Fragt <code>explain</code> für alle <code>apache-logs-ism-*</code> mehrfach im Abstand von etwa einer Minute ab und notiert jeweils <code>state</code>, <code>action</code> und <code>step</code>.
+<strong>Selbstcheck:</strong> Für 000001 seht ihr nacheinander diese Meldungen, pro Job-Lauf eine:</p>
+<table>
+<thead>
+<tr>
+<th>Lauf</th>
+<th><code>action</code></th>
+<th><code>step</code></th>
+<th>Meldung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+<td><code>Transitioning to warm</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>force_merge</code></td>
+<td><code>attempt_set_read_only</code></td>
+<td><code>Successfully set index to read-only</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>force_merge</code></td>
+<td><code>attempt_call_force_merge</code></td>
+<td><code>Successfully completed force merge</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>force_merge</code></td>
+<td><code>wait_for_force_merge</code></td>
+<td><code>Waiting for force merge to complete</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>force_merge</code></td>
+<td><code>wait_for_force_merge</code></td>
+<td><code>Successfully confirmed segments force merged</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>-</td>
+<td>-</td>
+<td><code>Transitioning to delete</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>delete</code></td>
+<td>-</td>
+<td>Index verschwindet</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Frage:</strong> <code>wait_for_force_merge</code> erscheint zweimal und kostet damit einen ganzen Job-Lauf zusätzlich. Bei fünf Dokumenten wirkt das absurd - warum ist es bei einem Index mit 50 GB genau richtig?</p>
+</li>
+<li>
+<p><strong>Die Frage aus Teil 2 beantworten.</strong> Ihr habt keine <code>read_only</code>-Action definiert, trotzdem taucht <code>attempt_set_read_only</code> auf.
+<strong>Selbstcheck:</strong> <code>force_merge</code> schützt den Index selbst vor Schreibzugriffen, bevor es die Segmente zusammenführt. Eine zusätzliche <code>read_only</code>-Action wäre überflüssig und würde nur einen weiteren Job-Lauf kosten.</p>
+</li>
+<li>
+<p><strong>Schreibschutz nachweisen.</strong> Prüft die Einstellung <code>index.blocks.write</code> und versucht anschließend, in 000001 zu schreiben.
+<strong>Selbstcheck:</strong> Die Einstellung steht auf <code>&quot;true&quot;</code>, der Schreibversuch scheitert mit Status 403 und <code>&quot;type&quot;: &quot;cluster_block_exception&quot;</code>, Grund <code>blocked by: [FORBIDDEN/8/index write (api)]</code>.</p>
+</li>
+<li>
+<p><strong>Wirkung von force_merge sehen.</strong> Schaut euch die Segmente von 000001 an.
+<strong>Selbstcheck:</strong> Pro Shard bleibt genau ein Segment übrig. In der Praxis ist das teuer: Der Merge schreibt den kompletten Index neu und gehört deshalb in Randzeiten, nicht auf einen aktiven Hot-Index.</p>
+</li>
+<li>
+<p><strong>Das Ende abwarten.</strong> Nach dem siebten Lauf dieser Tabelle ist <code>apache-logs-ism-000001</code> verschwunden - gerechnet ab dem Anlegen des Index sind es neun Läufe und damit rund neun Minuten.
+<strong>Selbstcheck:</strong> <code>GET _cat/indices/apache-logs-ism-*?v&amp;s=index</code> listet nur noch 000002 - das inzwischen selbst in Richtung <code>warm</code> unterwegs ist.
+<strong>Frage:</strong> 000002 ist der Write-Index und rollt nicht weiter, weil keine 5 Dokumente mehr dazukommen. Es altert aber und wird gelöscht. Was passiert danach mit dem Alias <code>apache-logs-ism</code> - und was macht ein Log-Shipper, der weiter dorthin schreibt? Probiert es aus, wenn ihr die Zeit habt.
+<strong>Selbstcheck:</strong> Der Alias verschwindet mit seinem letzten Index. Ein Schreibzugriff darauf legt danach einen ganz normalen Index namens <code>apache-logs-ism</code> an - ohne Nummernendung, ohne Policy, ohne Rollover. Genau so entstehen in der Praxis Indizes, die stillschweigend ewig wachsen.</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<pre class="hljs"><code><div>GET _plugins/_ism/explain/apache-logs-ism-*
+GET apache-logs-ism<span class="hljs-number">-000001</span>/_settings?filter_path=*.settings.index.blocks.write
+GET _cat/segments/apache-logs-ism<span class="hljs-number">-000001</span>?v&amp;h=index<span class="hljs-punctuation">,</span>shard<span class="hljs-punctuation">,</span>prirep<span class="hljs-punctuation">,</span>segment<span class="hljs-punctuation">,</span>docs.count
+</div></code></pre>
+<p>Der Schreibversuch:</p>
+<pre class="hljs"><code><div>POST apache-logs-ism<span class="hljs-number">-000001</span>/_doc
+<span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;@timestamp&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2026-04-07T11:00:00Z&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;clientip&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;83.149.9.216&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;verb&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;GET&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;/test&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;httpversion&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;1.1&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;response&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">200</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;bytes&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">100</span><span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Wenn ihr die Übergänge lieber grafisch verfolgt: In Dashboards unter <strong>Index Management -&gt; Policy managed indices</strong> seht ihr dieselben Informationen als Tabelle, inklusive Schaltflächen für Retry und Policy-Wechsel.</p>
+</details>
+<hr>
+<h3 id="teil-6-aufräumen-3-min">Teil 6: Aufräumen (3 Min.)</h3>
+<p><strong>Ziel:</strong> Den Cluster in den Ausgangszustand bringen. Das ist kein Nachklapp, sondern Teil der Lektion: Eine Policy mit <code>ism_template</code> arbeitet weiter, auch wenn ihr das Browserfenster schließt.</p>
+<ol>
+<li><strong>In der richtigen Reihenfolge zurückbauen.</strong> Überlegt zuerst, was zuerst weg muss.
+<strong>Frage:</strong> Was passiert, wenn ihr die Indizes löscht, aber Policy und Template stehen lassen?</li>
+<li>Entfernt Policy, Index Template und die verbliebenen <code>apache-logs-ism-*</code>-Indizes.</li>
+<li>Setzt <code>job_interval</code> und <code>jitter</code> auf die Standardwerte zurück.</li>
+</ol>
+<p><strong>Selbstcheck:</strong> <code>GET _plugins/_ism/policies</code> meldet <code>&quot;total_policies&quot;: 0</code>, <code>GET _cat/indices/apache-logs*?v</code> zeigt nur noch <code>apache-logs</code> mit unveränderten <strong>10.012</strong> Dokumenten, und <code>GET _cluster/settings</code> liefert ein leeres <code>persistent</code>-Objekt.</p>
+<details>
+<summary>Hinweis</summary>
+<p>Erst Policy und Template, dann die Indizes - sonst greift das <code>ism_template</code> beim nächsten Rollover erneut.</p>
+<pre class="hljs"><code><div>DELETE _plugins/_ism/policies/apache-log-lifecycle
+DELETE _index_template/apache-logs-ism-template
+DELETE apache-logs-ism-*
+</div></code></pre>
+<pre class="hljs"><code><div>PUT _cluster/settings
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;persistent&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;plugins.index_state_management.job_interval&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;plugins.index_state_management.jitter&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">null</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p><code>null</code> stellt den Standardwert wieder her.</p>
+</details>
+<hr>
+<h2 id="erwartete-ergebnisse">Erwartete Ergebnisse</h2>
+<ul>
+<li>Ein Cluster im Zeitraffer: <code>job_interval</code> auf 1 Minute, <code>jitter</code> abgeschaltet</li>
+<li>Eine Policy <code>apache-log-lifecycle</code> mit den Zuständen <code>hot</code>, <code>warm</code> und <code>delete</code></li>
+<li>Ein Index Template mit Rollover-Alias und ein Startindex <code>apache-logs-ism-000001</code></li>
+<li>Ein selbst ausgelöster Rollover auf <code>apache-logs-ism-000002</code>, nachgewiesen über den Write-Alias</li>
+<li>Ein vollständig beobachteter Lebenszyklus bis zur Löschung von 000001, Schritt für Schritt in <code>explain</code> mitgelesen</li>
+<li>Die Erkenntnis, dass <code>force_merge</code> den Schreibschutz selbst mitbringt und <code>min_index_age</code> vom Erstellungsdatum des Index ausgeht</li>
+<li>Ein zurückgebauter Cluster: keine Policy, kein Template, keine <code>apache-logs-ism-*</code>-Indizes, Standardtakt wiederhergestellt</li>
+</ul>
+<hr>
+<h2 id="bonusaufgaben">Bonusaufgaben</h2>
+<h3 id="bonus-1-das-karussell-der-leeren-indizes">Bonus 1: Das Karussell der leeren Indizes</h3>
+<p>Eure Policy rollt nur über die Dokumentzahl. Die meisten Beispiele im Netz kombinieren das mit einem Alter. Findet heraus, warum das im Labor eine Falle ist.</p>
+<p>Legt Policy, Template und Startindex noch einmal an, diesmal mit <strong>beiden</strong> Rollover-Bedingungen:</p>
+<pre class="hljs"><code><div><span class="hljs-attr">&quot;rollover&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;min_doc_count&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">5</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;min_index_age&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1m&quot;</span> <span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Schreibt anschließend <strong>kein einziges Dokument</strong> und schaut nach ein paar Minuten in <code>_cat/indices</code>.</p>
+<p><strong>Selbstcheck:</strong> Es entsteht etwa alle zwei Minuten ein neuer, vollständig leerer Index - jeder davon braucht erst einen Job-Lauf zur Initialisierung und einen zweiten für den Rollover. In <code>explain</code> steht dazu <code>&quot;min_doc_count&quot;: {&quot;condition&quot;: 5, &quot;current&quot;: 0}</code> neben der erfüllten Altersbedingung <code>&quot;min_index_age&quot;: {&quot;condition&quot;: &quot;1m&quot;, &quot;current&quot;: &quot;2m&quot;}</code>. Die Kette hört nie von selbst auf.</p>
+<p><strong>Fragen:</strong> Welche Verknüpfung liegt zwischen den Bedingungen - UND oder ODER? Warum ist genau diese Verknüpfung in Produktion trotzdem richtig, wenn ihr <code>min_size: 50gb</code> mit <code>min_index_age: 1d</code> kombiniert? Und welche Bedingung würdet ihr für einen Index wählen, der nachts kaum Traffic hat?</p>
+<p>Räumt danach wieder auf.</p>
+<h3 id="bonus-2-die-eingefrorene-policy">Bonus 2: Die eingefrorene Policy</h3>
+<p>Ein Verhalten, das im Betrieb regelmäßig für Verwirrung sorgt: Eine geänderte Policy wirkt nicht automatisch auf Indizes, die bereits verwaltet werden. Ihr braucht dafür einen verwalteten Index - nutzt den Aufbau aus Bonus 1 oder legt Policy, Template und Startindex noch einmal neu an.</p>
+<p>Merkt euch den Wert <code>policy_seq_no</code> aus der <code>explain</code>-Ausgabe eines laufenden Index. Ändert dann die Policy - zum Beispiel die Beschreibung und eine Bedingung - und schaut erneut nach.</p>
+<p><strong>Selbstcheck:</strong> Die Policy selbst hat eine neue <code>_seq_no</code>, der verwaltete Index arbeitet aber unverändert mit der alten Nummer weiter. Mit <code>GET _plugins/_ism/explain/&lt;index&gt;?show_policy=true</code> seht ihr die eingefrorene Kopie im Wortlaut - inklusive der alten Beschreibung.</p>
+<p>Zieht die neue Fassung anschließend nach:</p>
+<pre class="hljs"><code><div>POST _plugins/_ism/change_policy/apache-logs-ism<span class="hljs-number">-000001</span>
+<span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;policy_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;apache-log-lifecycle&quot;</span> <span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p><strong>Selbstcheck:</strong> Im Normalfall meldet der Aufruf <code>&quot;updated_indices&quot;: 1</code>. Steckt der Index gerade in einem Zustandswechsel, bekommt ihr stattdessen <code>&quot;failures&quot;: true</code> mit dem Grund <code>Cannot change policy while transitioning to new state</code> - dann eine Minute warten und erneut versuchen.</p>
+<p><strong>Frage:</strong> Warum friert ISM die Policy überhaupt ein, statt immer die aktuelle Fassung zu lesen? Denkt an einen Index, der gerade mitten in <code>warm</code> steckt, während jemand den State umbenennt.</p>
+<h3 id="bonus-3-einen-bestandsindex-nachrüsten">Bonus 3: Einen Bestandsindex nachrüsten</h3>
+<p>Der vorgeladene <code>apache-logs</code>-Index ist unverwaltet. So bekommt ihr ihn unter ISM-Kontrolle, ohne ihm wehzutun.</p>
+<p>Baut eine harmlose Policy, die nichts löscht und nichts schreibschützt - ein einziger State mit der Action <code>index_priority</code> genügt. Hängt sie mit <code>POST _plugins/_ism/add/apache-logs</code> an den Index und nehmt sie danach mit <code>POST _plugins/_ism/remove/apache-logs</code> wieder weg.</p>
+<p><strong>Selbstcheck:</strong> Beide Aufrufe antworten mit <code>&quot;updated_indices&quot;: 1</code> und <code>&quot;failures&quot;: false</code>. Zwischendurch zeigt <code>explain</code> die <code>policy_id</code>.</p>
+<p><strong>Frage:</strong> Eure Lifecycle-Policy aus Teil 2 könntet ihr auf diesem Weg ebenfalls anhängen - der Rollover würde trotzdem scheitern. Woran liegt das, und was müsstet ihr am Index vorher ändern?</p>
+<h3 id="bonus-4-data-streams---der-modernere-weg">Bonus 4: Data Streams - der modernere Weg</h3>
+<p>Alles, was ihr in Teil 3 von Hand gebaut habt (Alias, Write-Index, Namenskonvention, <code>rollover_alias</code>), nimmt euch ein Data Stream ab.</p>
+<p>Legt ein Index Template mit <code>&quot;data_stream&quot;: {}</code> für ein eigenes Muster an, schreibt ein Dokument in den Data Stream und schaut euch mit <code>GET _data_stream/&lt;name&gt;</code> an, was OpenSearch daraus gemacht hat. Löst danach mit <code>POST &lt;name&gt;/_rollover</code> von Hand einen Rollover aus.</p>
+<p><strong>Selbstcheck:</strong> Der Data Stream verwaltet verborgene Backing-Indizes mit Namen nach dem Muster <code>.ds-&lt;name&gt;-000001</code>; nach dem Rollover kommt <code>.ds-&lt;name&gt;-000002</code> dazu und die <code>generation</code> steigt auf 2. Einen <code>rollover_alias</code> habt ihr nirgends gesetzt - ISM leitet ihn beim Data Stream selbst ab.</p>
+<p><strong>Fragen:</strong> Welches Feld muss ein Data Stream zwingend haben, und was passiert, wenn ihr ein Dokument ohne dieses Feld schickt? Warum eignen sich Data Streams gut für Logs, aber schlecht für einen Produktkatalog?</p>
+<p>Löscht den Data Stream und das Template zum Schluss wieder.</p>
+<hr>
+<h2 id="wiederholung">Wiederholung</h2>
+<h3 id="die-bausteine-einer-policy">Die Bausteine einer Policy</h3>
+<table>
+<thead>
+<tr>
+<th>Baustein</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>default_state</code></td>
+<td>Zustand, in dem ein neu verwalteter Index startet</td>
+</tr>
+<tr>
+<td><code>states</code></td>
+<td>Benannte Zustände mit ihren Actions und Transitions</td>
+</tr>
+<tr>
+<td><code>actions</code></td>
+<td>Was in einem Zustand getan wird, in der angegebenen Reihenfolge</td>
+</tr>
+<tr>
+<td><code>transitions</code></td>
+<td>Unter welcher Bedingung in welchen Zustand gewechselt wird</td>
+</tr>
+<tr>
+<td><code>ism_template</code></td>
+<td>Hängt die Policy automatisch an neue Indizes im Namensmuster</td>
+</tr>
+</tbody>
+</table>
+<p>Ein Zustand ohne Transitions ist ein Endzustand - die Policy gilt für diesen Index dann als abgearbeitet.</p>
+<h3 id="rollover-bedingungen">Rollover-Bedingungen</h3>
+<table>
+<thead>
+<tr>
+<th>Bedingung</th>
+<th>Beschreibung</th>
+<th>Lab</th>
+<th>Produktion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>min_doc_count</code></td>
+<td>Mindestanzahl Dokumente</td>
+<td><code>5</code></td>
+<td><code>10000000</code></td>
+</tr>
+<tr>
+<td><code>min_index_age</code></td>
+<td>Mindestalter des Index</td>
+<td><code>1m</code></td>
+<td><code>1d</code> bis <code>7d</code></td>
+</tr>
+<tr>
+<td><code>min_size</code></td>
+<td>Mindestgröße des gesamten Index</td>
+<td>-</td>
+<td><code>50gb</code></td>
+</tr>
+<tr>
+<td><code>min_primary_shard_size</code></td>
+<td>Mindestgröße eines Primary Shard</td>
+<td>-</td>
+<td><code>25gb</code></td>
+</tr>
+</tbody>
+</table>
+<p>Mehrere Bedingungen sind <strong>ODER</strong>-verknüpft: Es genügt, wenn <strong>eine</strong> erfüllt ist. Ein Alterskriterium rollt deshalb auch leere Indizes.</p>
+<h3 id="was-explain-verrät">Was <code>explain</code> verrät</h3>
+<table>
+<thead>
+<tr>
+<th>Feld</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>policy_id</code></td>
+<td>Welche Policy den Index verwaltet</td>
+</tr>
+<tr>
+<td><code>policy_seq_no</code></td>
+<td>Welche <strong>Version</strong> der Policy der Index eingefroren hat</td>
+</tr>
+<tr>
+<td><code>state.name</code></td>
+<td>Aktueller Zustand</td>
+</tr>
+<tr>
+<td><code>action.name</code></td>
+<td>Aktuell laufende Action</td>
+</tr>
+<tr>
+<td><code>step.name</code></td>
+<td>Einzelschritt innerhalb der Action - hier sieht man den Fortschritt</td>
+</tr>
+<tr>
+<td><code>info.message</code></td>
+<td>Klartextmeldung des letzten Schritts</td>
+</tr>
+<tr>
+<td><code>info.conditions</code></td>
+<td>Soll- und Ist-Wert jeder Rollover-Bedingung</td>
+</tr>
+<tr>
+<td><code>rolled_over</code></td>
+<td>Ob der Index bereits gerollt wurde</td>
+</tr>
+<tr>
+<td><code>index_creation_date</code></td>
+<td>Bezugspunkt für alle <code>min_index_age</code>-Bedingungen</td>
+</tr>
+<tr>
+<td><code>retry_info</code></td>
+<td>Ob ein Schritt fehlgeschlagen ist und wie oft wiederholt wurde</td>
+</tr>
+</tbody>
+</table>
+<h3 id="der-job-takt">Der Job-Takt</h3>
+<table>
+<thead>
+<tr>
+<th>Einstellung</th>
+<th>Standard</th>
+<th>In dieser Übung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>plugins.index_state_management.job_interval</code></td>
+<td>5 Minuten</td>
+<td>1 Minute</td>
+</tr>
+<tr>
+<td><code>plugins.index_state_management.jitter</code></td>
+<td>0.6 (Streuung bis 60 Prozent)</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+<p>Pro Lauf wird <strong>ein</strong> Schritt ausgeführt. Der Lebenszyklus dieser Übung braucht neun Läufe - im Zeitraffer rund neun Minuten, mit Standardtakt gut eine Stunde.</p>
+<h3 id="klassische-indizes-gegen-data-streams">Klassische Indizes gegen Data Streams</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Alias und Rollover</th>
+<th>Data Stream</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Write-Index</td>
+<td>selbst anlegen, <code>is_write_index</code> setzen</td>
+<td>wird verwaltet</td>
+</tr>
+<tr>
+<td>Namensmuster</td>
+<td>Endung <code>-000001</code> zwingend</td>
+<td>wird vergeben (<code>.ds-...</code>)</td>
+</tr>
+<tr>
+<td><code>rollover_alias</code></td>
+<td>Setting nötig</td>
+<td>nicht nötig</td>
+</tr>
+<tr>
+<td>Löschen einzelner Dokumente</td>
+<td>möglich</td>
+<td>eingeschränkt, append-only gedacht</td>
+</tr>
+<tr>
+<td>Geeignet für</td>
+<td>Logs und bestehende Setups</td>
+<td>neue Zeitreihen-Anwendungen</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="tipps--ressourcen">Tipps &amp; Ressourcen</h2>
+<h3 id="vorgehen">Vorgehen</h3>
+<ul>
+<li>Legt Policy und Template <strong>vor</strong> dem ersten Index an, sonst greift das <code>ism_template</code> nicht</li>
+<li>Bei jedem Rollover-Problem zuerst <code>explain</code> lesen, besonders <code>info.conditions</code> und <code>retry_info</code></li>
+<li>Rollover braucht drei Dinge im Einklang: Alias, Write-Index und die Nummernendung im Indexnamen</li>
+<li>Bedenkt bei jeder Policy, wie viele Job-Läufe sie braucht - jeder Schritt kostet ein Intervall</li>
+<li>Vor <code>delete</code> gehört in Produktion ein Snapshot; ein gelöschter Index ist ohne Backup weg</li>
+<li>Policies gehören versioniert nach Git, zusammen mit den Prioritäten der <code>ism_template</code>-Muster</li>
+<li>Nach einem Fehler hilft <code>POST _plugins/_ism/retry/&lt;index&gt;</code>, nach einer Policy-Änderung <code>change_policy</code></li>
+</ul>
+<h3 id="weiterführend">Weiterführend</h3>
+<ul>
+<li><a href="https://docs.opensearch.org/latest/im-plugin/ism/index/">Index State Management</a></li>
+<li><a href="https://docs.opensearch.org/latest/im-plugin/ism/policies/">ISM Policies, Actions und Transitions</a></li>
+<li><a href="https://docs.opensearch.org/latest/im-plugin/ism/api/">ISM API</a></li>
+<li><a href="https://docs.opensearch.org/latest/im-plugin/ism/settings/">ISM Settings</a></li>
+<li><a href="https://docs.opensearch.org/latest/im-plugin/ism/managedindexes/">Managed Indices</a></li>
+<li><a href="https://docs.opensearch.org/latest/im-plugin/index-templates/">Index Templates</a></li>
+<li><a href="https://docs.opensearch.org/latest/im-plugin/data-streams/">Data Streams</a></li>
+<li><a href="https://docs.opensearch.org/latest/dashboards/im-dashboards/index/">Index Management in Dashboards</a></li>
+</ul>
+
+</body>
+</html>

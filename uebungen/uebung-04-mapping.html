@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>uebung-04-mapping.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="übung-4-mapping---dynamisch-vs-explizit-beide">Übung 4: Mapping - Dynamisch vs. Explizit [Beide]</h1>
+<h2 id="einleitung">Einleitung</h2>
+<p>Das Mapping legt fest, wie OpenSearch jedes Feld interpretiert: welchen Datentyp es hat, ob und wie es analysiert wird, und was ihr später damit anfangen könnt. In dieser Übung erlebt ihr am eigenen Index, wie dynamisches Mapping stille Fehlentscheidungen trifft, was sich davon nachträglich reparieren lässt und was nicht.</p>
+<p>Ihr arbeitet in den <strong>Dev Tools</strong> von OpenSearch Dashboards. Die Aufrufe müsst ihr größtenteils selbst formulieren - ihr bekommt das Ziel, die Anforderungen und eine Zahl zum Selbstcheck. Wenn ihr nicht weiterkommt, öffnet den Hinweis unter der Aufgabe. Für die Schnellen gibt es am Ende vier Bonusaufgaben.</p>
+<h2 id="lernziele">Lernziele</h2>
+<ul>
+<li>Den Unterschied zwischen dynamischem und explizitem Mapping verstehen</li>
+<li>Erkennen, wann dynamisches Mapping zu falschen Datentypen führt</li>
+<li>Ein explizites Mapping selbst schreiben und anwenden</li>
+<li>Unterscheiden können, was sich am Mapping ändern lässt und was nicht</li>
+<li>Die <code>_mapping</code>- und die <code>_analyze</code>-API nutzen</li>
+<li>Die Wirkung eines Analyzers an eigenem Text nachvollziehen</li>
+<li>Einen Index schließen und öffnen, um eine statische Einstellung zu ändern</li>
+<li>Einen Write-Block setzen, den Fehler lesen und den Block wieder lösen</li>
+</ul>
+<h2 id="voraussetzungen">Voraussetzungen</h2>
+<ul>
+<li>Übung 2 abgeschlossen, Cluster und Dashboards laufen</li>
+<li>Dev Tools Console erreichbar: <strong>http://localhost:5601/app/dev_tools#/console</strong></li>
+<li>Ihr arbeitet in einem eigenen Index namens <code>mapping-lab</code>, die vorgeladenen Daten bleiben unberührt</li>
+</ul>
+<hr>
+<h2 id="aufgabe">Aufgabe</h2>
+<h3 id="teil-1-dynamic-mapping-erleben">Teil 1: Dynamic Mapping erleben</h3>
+<p><strong>Ziel:</strong> Sehen, welche Typentscheidungen OpenSearch trifft, wenn ihr keine trefft.</p>
+<p>Legt einen frischen Index an, indem ihr einfach ein Dokument hineinschreibt - ganz ohne vorher ein Mapping zu definieren:</p>
+<pre class="hljs"><code><div>DELETE mapping-lab
+
+PUT mapping-lab/_doc/<span class="hljs-number">1</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;product&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Laufschuh Pro&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;49.99&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;quantity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;10&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;available&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;true&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;created_at&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-04-07&quot;</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p><strong>Bevor ihr weiterlest:</strong> Schreibt für jedes der fünf Felder auf, welchen Typ OpenSearch eurer Meinung nach vergeben wird. Erst danach ruft ihr das Mapping ab.</p>
+<p><strong>Selbstcheck:</strong> Vier der fünf Felder landen beim selben Typ, nur <code>created_at</code> fällt heraus.</p>
+<p><strong>Fragen zum Erkunden:</strong></p>
+<ul>
+<li>Warum wird ausgerechnet <code>created_at</code> richtig erkannt, obwohl auch dieser Wert in Anführungszeichen steht?</li>
+<li>Die vier anderen Felder haben zusätzlich ein Unterfeld bekommen. Wie heißt es, und wozu ist es gut?</li>
+<li>Es gibt eine Index-Einstellung, die <code>&quot;49.99&quot;</code> als Zahl erkennen würde. Findet sie in der Dokumentation. Würdet ihr sie einschalten? Denkt dabei an Postleitzahlen wie <code>&quot;01067&quot;</code> und an Versionsnummern wie <code>&quot;1.2&quot;</code>.</li>
+</ul>
+<details>
+<summary>Hinweis</summary>
+<p>Das Mapping eines Index lest ihr mit <code>GET &lt;index&gt;/_mapping</code>. Die gesuchte Einstellung heißt <code>numeric_detection</code> und steht in der Mapping-Dokumentation unter dynamischem Mapping.</p>
+</details>
+<hr>
+<h3 id="teil-2-was-das-kostet---und-was-sich-reparieren-lässt">Teil 2: Was das kostet - und was sich reparieren lässt</h3>
+<p><strong>Ziel:</strong> Die Folgen der falschen Typen erleben und herausfinden, was man dagegen tun kann.</p>
+<ol>
+<li>
+<p><strong>Rechnet den Durchschnittspreis aus.</strong> Formuliert eine Suche mit <code>&quot;size&quot;: 0</code> und einer <code>avg</code>-Aggregation auf <code>price</code>.
+<strong>Selbstcheck:</strong> Ihr bekommt keinen Wert, sondern HTTP 400 und einen Fehler vom Typ <code>illegal_argument_exception</code>.
+<strong>Frage:</strong> Lest die Fehlermeldung genau. Sie nennt zwei mögliche Auswege. Welcher ist der richtige, und warum ist der andere in der Produktion gefährlich?</p>
+</li>
+<li>
+<p><strong>Repariert das Mapping.</strong> Versucht, dem Feld <code>price</code> per <code>PUT mapping-lab/_mapping</code> den Typ <code>float</code> zu geben.
+<strong>Selbstcheck:</strong> Auch das schlägt fehl, mit einer sehr eindeutigen Begründung.</p>
+</li>
+<li>
+<p><strong>Ergänzt ein neues Feld.</strong> Fügt demselben Index per <code>PUT mapping-lab/_mapping</code> ein bisher unbekanntes Feld hinzu, etwa <code>color</code> als <code>keyword</code>.
+<strong>Selbstcheck:</strong> <code>acknowledged: true</code> - das funktioniert.</p>
+</li>
+</ol>
+<p><strong>Die Erkenntnis formulieren:</strong> Aus Schritt 2 und 3 zusammen folgt eine präzisere Regel als der oft gehörte Satz, Mappings ließen sich nicht ändern. Formuliert sie in einem Satz.</p>
+<p><strong>Fragen zum Erkunden:</strong></p>
+<ul>
+<li>Wenn der Typ eines bestehenden Feldes feststeht: Wie repariert man so einen Index in der Produktion, ohne die Daten zu verlieren? (Genauer angeschaut wird das in Bonus 1.)</li>
+<li>Warum verbietet OpenSearch die Typänderung überhaupt? Denkt daran, was beim Indexieren mit dem Wert passiert und wo er landet.</li>
+</ul>
+<details>
+<summary>Hinweis</summary>
+<p>Die Aggregation formuliert ihr als <code>POST mapping-lab/_search</code> mit <code>&quot;size&quot;: 0</code> und einem <code>aggs</code>-Block. Ein Mapping ergänzt ihr mit <code>PUT mapping-lab/_mapping</code> und einem <code>properties</code>-Block - ohne den umschließenden <code>mappings</code>-Schlüssel, den ihr beim Anlegen eines Index braucht.</p>
+</details>
+<hr>
+<h3 id="teil-3-explizites-mapping-schreiben">Teil 3: Explizites Mapping schreiben</h3>
+<p><strong>Ziel:</strong> Denselben Index noch einmal, diesmal mit einem Mapping, das ihr selbst festlegt.</p>
+<p>Löscht <code>mapping-lab</code> und legt ihn neu an - mit einem expliziten Mapping nach diesen Anforderungen:</p>
+<table>
+<thead>
+<tr>
+<th>Feld</th>
+<th>Anforderung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>product</code></td>
+<td>Volltextsuche <strong>und</strong> exakte Aggregation möglich</td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td>Dezimalzahl, Bereichsabfragen und Durchschnitt möglich</td>
+</tr>
+<tr>
+<td><code>quantity</code></td>
+<td>Ganzzahl</td>
+</tr>
+<tr>
+<td><code>available</code></td>
+<td>Ja/Nein-Wert</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td>Datum</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>deutscher Volltext, mit Stammformen statt exakter Wörter</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p><strong>Legt den Index an</strong> und indexiert danach <strong>dasselbe Dokument wie in Teil 1</strong>, also weiterhin mit den Werten in Anführungszeichen.
+<strong>Frage:</strong> Warum wird das Dokument jetzt angenommen, obwohl <code>&quot;49.99&quot;</code> immer noch ein String ist? Wie heißt dieses Verhalten?</p>
+</li>
+<li>
+<p><strong>Wiederholt die Durchschnittsberechnung</strong> aus Teil 2.
+<strong>Selbstcheck:</strong> Ihr bekommt einen Wert, aber nicht exakt <code>49.99</code>, sondern <code>49.9900016784668</code>.
+<strong>Frage:</strong> Woher kommt die Abweichung? Und welchen Feldtyp würdet ihr wählen, wenn es um Geldbeträge geht, bei denen jeder Cent stimmen muss?</p>
+</li>
+<li>
+<p><strong>Indexiert ein zweites Dokument</strong> mit einem Feld, das im Mapping gar nicht vorkommt:</p>
+</li>
+</ol>
+<pre class="hljs"><code><div>PUT mapping-lab/_doc/<span class="hljs-number">2</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;product&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Wanderschuh Classic&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">189.99</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;quantity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">5</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;available&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;created_at&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026-04-07&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Robuster Wanderschuh für Bergtouren&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;braun&quot;</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Schaut euch das Mapping danach erneut an.
+<strong>Frage:</strong> Was ist mit <code>color</code> passiert? Ein explizites Mapping schaltet das dynamische also <strong>nicht</strong> ab - ist das gut oder gefährlich? Wovon hängt eure Antwort ab?</p>
+<details>
+<summary>Hinweis zur Struktur des Mappings</summary>
+<pre class="hljs"><code><div>PUT mapping-lab
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;mappings&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;properties&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;feldname&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;...&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;textfeld&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;text&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;fields&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;keyword&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;keyword&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;deutsches_textfeld&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;text&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;analyzer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;...&quot;</span> <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Die passenden Typnamen findet ihr unter den unterstützten Feldtypen in der Dokumentation.</p>
+</details>
+<hr>
+<h3 id="teil-4-analyzer-sichtbar-machen">Teil 4: Analyzer sichtbar machen</h3>
+<p><strong>Ziel:</strong> Verstehen, was zwischen eurem Text und dem invertierten Index passiert.</p>
+<ol>
+<li>
+<p><strong>Vergleicht zwei Analyzer</strong> am selben Satz mit der <code>_analyze</code>-API:</p>
+<p><code>OpenSearch ist eine großartige Suchmaschine</code></p>
+<p>Einmal mit dem <code>standard</code>-Analyzer, einmal mit dem <code>german</code>-Analyzer.</p>
+<p><strong>Selbstcheck:</strong> Der Standard-Analyzer liefert 5 Tokens, der German-Analyzer 3.</p>
+<p><strong>Fragen:</strong></p>
+<ul>
+<li>Welche zwei Wörter sind verschwunden, und warum?</li>
+<li>Aus <code>großartige</code> wird <code>grossartig</code>. Zwei Dinge sind hier passiert - welche? Und warum ist die Behandlung des <code>ß</code> für die Suche wichtig?</li>
+<li><code>Suchmaschine</code> wird zu <code>suchmaschin</code>. Das ist kein gültiges deutsches Wort. Warum ist das trotzdem richtig so?</li>
+</ul>
+</li>
+<li>
+<p><strong>Prüft euer eigenes Feld.</strong> Lasst euch zeigen, wie der Text <code>Wanderschuhe für Bergtouren</code> im Feld <code>description</code> eures Index zerlegt wird - nicht mit einem frei gewählten Analyzer, sondern mit dem, der für dieses Feld wirklich konfiguriert ist.</p>
+<p><strong>Selbstcheck:</strong> zwei Tokens, und <code>Wanderschuhe</code> im Plural landet auf demselben Token wie <code>Wanderschuh</code> im Singular aus Dokument 2.</p>
+<p><strong>Frage:</strong> Was bedeutet das für eine Suche nach <code>Wanderschuhe</code>? Und was wäre passiert, wenn <code>description</code> ein <code>keyword</code>-Feld wäre?</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<p>Ohne Index prüft ihr einen Analyzer mit <code>POST _analyze</code> und den Schlüsseln <code>analyzer</code> und <code>text</code>. Gegen ein konkretes Feld eines Index geht es mit <code>POST &lt;index&gt;/_analyze</code> und den Schlüsseln <code>field</code> und <code>text</code>.</p>
+</details>
+<hr>
+<h3 id="teil-5-index-schließen-analyzer-nachrüsten-write-block">Teil 5: Index schließen, Analyzer nachrüsten, Write-Block</h3>
+<p><strong>Ziel:</strong> Statische Einstellungen nur am geschlossenen Index ändern - und einen Index gezielt schreibschützen.</p>
+<p>Ihr arbeitet weiter mit <code>mapping-lab</code> aus Teil 3.</p>
+<ol>
+<li>
+<p><strong>Analyzer am offenen Index ergänzen.</strong> Fügt unter <code>settings.analysis</code> einen eigenen Analyzer <code>lab_de</code> hinzu: <code>custom</code>, Tokenizer <code>standard</code>, Filter <code>lowercase</code> und <code>german_normalization</code>.
+<strong>Selbstcheck:</strong> HTTP 400, Typ <code>illegal_argument_exception</code>. Die Meldung nennt <strong>non dynamic settings</strong> und den offenen Index.
+<strong>Frage:</strong> Warum lässt OpenSearch das am offenen Index nicht zu? Denkt an Segmente, die schon mit dem alten Analyzer geschrieben wurden.</p>
+</li>
+<li>
+<p><strong>Den Weg über <code>_close</code> und <code>_open</code>.</strong> Schließt den Index, wiederholt denselben Settings-Aufruf, öffnet ihn wieder.
+<strong>Selbstcheck:</strong> Nach dem Schließen zeigt <code>GET _cat/indices/mapping-lab?v</code> den Status <code>close</code>. Der Settings-Aufruf liefert <code>&quot;acknowledged&quot;: true</code>. Nach dem Öffnen ist der Status wieder <code>open</code>.
+<strong>Frage:</strong> Könnt ihr den Analyzer von <code>description</code> jetzt auf <code>lab_de</code> umstellen? Probiert <code>PUT mapping-lab/_mapping</code>. Was bleibt der einzige Weg für eine Typ- oder Analyzer-Änderung am Feld?</p>
+</li>
+<li>
+<p><strong>Schreibschutz setzen.</strong> Setzt <code>index.blocks.write</code> auf <code>true</code> und versucht, ein weiteres Dokument zu indexieren.
+<strong>Selbstcheck:</strong> Der Schreibversuch scheitert mit Status 403 und <code>&quot;type&quot;: &quot;cluster_block_exception&quot;</code>, Grund <code>blocked by: [FORBIDDEN/8/index write (api)]</code>.
+<strong>Frage:</strong> Welchen Block würdet ihr wählen, wenn auch Settings-Änderungen verboten sein sollen? Und welcher Block erscheint von selbst, wenn die Platte zu 95 % voll ist?</p>
+</li>
+<li>
+<p><strong>Block lösen.</strong> Setzt <code>index.blocks.write</code> auf <code>null</code> (nicht auf <code>false</code>) und schreibt dasselbe Dokument noch einmal.
+<strong>Selbstcheck:</strong> <code>&quot;result&quot;: &quot;created&quot;</code>.
+<strong>Frage:</strong> Warum ist <code>null</code> die sauberere Lösung als <code>false</code>? Schaut euch <code>GET mapping-lab/_settings?flat_settings=true</code> vorher und nachher an.</p>
+</li>
+</ol>
+<details>
+<summary>Hinweis</summary>
+<p>Analyzer gehören in <code>settings.analysis</code>, nicht ins Mapping. Am offenen Index:</p>
+<pre class="hljs"><code><div>PUT mapping-lab/_settings
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;analysis&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;analyzer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;lab_de&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;custom&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;tokenizer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;standard&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;filter&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;lowercase&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;german_normalization&quot;</span><span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Schließen und öffnen: <code>POST mapping-lab/_close</code> und <code>POST mapping-lab/_open</code>. Den Status seht ihr mit <code>GET _cat/indices/mapping-lab?v</code>.</p>
+<p>Write-Block:</p>
+<pre class="hljs"><code><div>PUT mapping-lab/_settings
+<span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;index.blocks.write&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span> <span class="hljs-punctuation">}</span>
+</div></code></pre>
+<p>Lösen mit <code>&quot;index.blocks.write&quot;: null</code>.</p>
+</details>
+<hr>
+<h2 id="bonusaufgaben">Bonusaufgaben</h2>
+<h3 id="bonus-1-den-index-reparieren-ohne-daten-zu-verlieren">Bonus 1: Den Index reparieren, ohne Daten zu verlieren</h3>
+<p>In Teil 2 habt ihr gesehen, dass sich der Typ eines Feldes nicht ändern lässt. In der Produktion ist das Löschen des Index trotzdem keine Option. Der übliche Weg führt über einen zweiten Index und einen Alias.</p>
+<p>Baut die Situation nach:</p>
+<ol>
+<li>Legt einen Index <code>produkte-v1</code> an, in dem <code>price</code> durch dynamisches Mapping als <code>text</code> landet, und schreibt zwei, drei Dokumente hinein.</li>
+<li>Legt einen Alias <code>produkte</code> an, der auf <code>produkte-v1</code> zeigt, und prüft, dass ihr über den Alias suchen könnt.</li>
+<li>Legt <code>produkte-v2</code> mit korrektem Mapping an und kopiert die Daten mit der Reindex-API hinüber.</li>
+<li>Schwenkt den Alias in <strong>einem</strong> Aufruf von <code>v1</code> auf <code>v2</code> um.</li>
+<li>Prüft, dass die Aggregation über den Alias <code>produkte</code> jetzt funktioniert.</li>
+</ol>
+<p><strong>Fragen:</strong> Warum ist Schritt 4 als ein einziger Aufruf wichtig? Und welche Rolle spielt der Alias dafür, dass eure Anwendungen von der ganzen Aktion nichts mitbekommen?</p>
+<h3 id="bonus-2-tippfehler-wirksam-verbieten">Bonus 2: Tippfehler wirksam verbieten</h3>
+<p>Ein Feld <code>prodcut</code> schreibt sich schnell. Dynamisches Mapping legt es klaglos an, und niemand merkt es, bis die Zahlen nicht stimmen.</p>
+<ul>
+<li>Findet den Mapping-Parameter, der genau das verhindert, und schaltet ihn für <code>mapping-lab</code> ein.</li>
+<li>Indexiert danach ein Dokument mit einem unbekannten Feld.
+<strong>Selbstcheck:</strong> Ihr bekommt einen Fehler vom Typ <code>strict_dynamic_mapping_exception</code>.</li>
+<li>Der Parameter kennt noch weitere Werte. Was passiert bei <code>false</code>, und wo ist der Unterschied zu <code>strict</code>? Prüft es aus.</li>
+<li>Diskutiert: Für welche der beiden Betriebsarten aus dieser Schulung passt welcher Wert - Suche oder Logging?</li>
+</ul>
+<h3 id="bonus-3-ein-kaputter-wert-kippt-das-ganze-dokument">Bonus 3: Ein kaputter Wert kippt das ganze Dokument</h3>
+<p>Indexiert in euren typisierten Index ein Dokument, bei dem <code>price</code> den Wert <code>&quot;49,99 EUR&quot;</code> hat, also mit Komma und Währung.</p>
+<ul>
+<li>Was passiert mit dem gesamten Dokument, obwohl nur ein einziges Feld unbrauchbar ist?</li>
+<li>Findet den Mapping-Parameter, mit dem OpenSearch solche Werte überspringt, statt das Dokument abzulehnen. Legt einen Testindex damit an und wiederholt den Versuch.</li>
+<li>Danach die entscheidende Prüfung: Steht der kaputte Wert noch im <code>_source</code>? Und findet ihr das Dokument über eine <code>exists</code>-Abfrage auf <code>price</code>?</li>
+<li>Diskutiert: Was ist schlimmer - ein abgelehntes Dokument, das jemand bemerkt, oder ein angenommenes Dokument mit einem unsichtbar fehlenden Feld?</li>
+</ul>
+<h3 id="bonus-4-ein-echtes-mapping-lesen">Bonus 4: Ein echtes Mapping lesen</h3>
+<p>Schaut euch das Mapping des vorgeladenen Index <code>rezepte</code> an. Es ist bewusst so gebaut, wie man es in einem Suchprojekt tun würde - mit einer Auffälligkeit.</p>
+<ul>
+<li>Welche Felder sind deutsch analysiert, und welche davon haben zusätzlich ein <code>keyword</code>-Unterfeld? Erklärt für jedes, warum.</li>
+<li>Der Index enthält <code>Day</code>, <code>Month</code>, <code>Year</code> und <code>Weekday</code>, aber <strong>kein einziges</strong> Feld vom Typ <code>date</code>. Welche Auswertungen sind dadurch unmöglich oder umständlich?</li>
+<li>Sucht alle Rezepte ab dem Jahr 2015. <code>Year</code> ist ein <code>keyword</code>, die Abfrage vergleicht also Zeichenketten und nicht Zahlen.
+<strong>Selbstcheck:</strong> 3.543 Treffer, und das ist tatsächlich das richtige Ergebnis. Warum geht das hier gut, und ab wann würde derselbe Trick scheitern?</li>
+<li>Lasst euch die Verteilung über die Monate ausgeben und sortiert sie nach dem Feldwert. Warum steht der April vorn? Was müsste sich am Mapping ändern, damit eine chronologische Sortierung möglich wird?</li>
+<li>Wie würdet ihr den Index insgesamt reparieren? Skizziert die Schritte - ihr kennt sie aus Bonus 1.</li>
+</ul>
+<hr>
+<h2 id="erwartete-ergebnisse">Erwartete Ergebnisse</h2>
+<ul>
+<li>Ihr könnt vorhersagen, welche Typen dynamisches Mapping vergibt, und begründen warum</li>
+<li>Ihr wisst, dass sich Felder ergänzen, aber ihre Typen nicht ändern lassen</li>
+<li>Ein selbst geschriebenes Mapping mit sechs typisierten Feldern liegt im Index <code>mapping-lab</code></li>
+<li>Die Durchschnittsberechnung auf <code>price</code> liefert einen Wert statt eines Fehlers</li>
+<li>Ihr könnt an Tokens zeigen, was der German Analyzer mit deutschem Text macht</li>
+<li>Ihr habt einen Analyzer am geschlossenen Index nachgerüstet und einen Write-Block gesetzt und wieder gelöst</li>
+</ul>
+<hr>
+<h2 id="wiederholung">Wiederholung</h2>
+<h3 id="häufige-feldtypen">Häufige Feldtypen</h3>
+<table>
+<thead>
+<tr>
+<th>Typ</th>
+<th>Wann verwenden</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>Volltextsuche, wird analysiert</td>
+<td>Produktbeschreibung, Logmeldung</td>
+</tr>
+<tr>
+<td><code>keyword</code></td>
+<td>Exakte Werte, Aggregationen, Sortierung</td>
+<td>Status, Kategorie, E-Mail</td>
+</tr>
+<tr>
+<td><code>float</code> / <code>double</code></td>
+<td>Dezimalzahlen</td>
+<td>Bewertung, Messwert</td>
+</tr>
+<tr>
+<td><code>scaled_float</code></td>
+<td>Dezimalzahlen mit fester Genauigkeit</td>
+<td>Preis in Cent</td>
+</tr>
+<tr>
+<td><code>integer</code> / <code>long</code></td>
+<td>Ganzzahlen</td>
+<td>Anzahl, Port</td>
+</tr>
+<tr>
+<td><code>boolean</code></td>
+<td>Ja/Nein</td>
+<td>Verfügbarkeit</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Zeitbasierte Abfragen und Histogramme</td>
+<td>Timestamp</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td>IP-Adressen, Filter mit CIDR</td>
+<td>Client-IP</td>
+</tr>
+<tr>
+<td><code>object</code></td>
+<td>Verschachtelte Struktur, flach indexiert</td>
+<td>Host-Informationen</td>
+</tr>
+<tr>
+<td><code>nested</code></td>
+<td>Verschachtelte Struktur, getrennt indexiert</td>
+<td>Bestellpositionen</td>
+</tr>
+</tbody>
+</table>
+<h3 id="was-lässt-sich-am-mapping-ändern">Was lässt sich am Mapping ändern?</h3>
+<table>
+<thead>
+<tr>
+<th>Änderung</th>
+<th>Möglich?</th>
+<th>Anmerkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Neues Feld ergänzen</td>
+<td>ja</td>
+<td>über <code>PUT &lt;index&gt;/_mapping</code></td>
+</tr>
+<tr>
+<td>Unterfeld (<code>.keyword</code>) ergänzen</td>
+<td>ja</td>
+<td>gilt aber nur für <strong>neu</strong> indexierte Dokumente</td>
+</tr>
+<tr>
+<td>Typ eines Feldes ändern</td>
+<td>nein</td>
+<td><code>mapper [...] cannot be changed from type [...]</code></td>
+</tr>
+<tr>
+<td>Analyzer eines Feldes ändern</td>
+<td>nein</td>
+<td>dieselbe Sperre, der Index ist bereits so geschrieben</td>
+</tr>
+<tr>
+<td><code>dynamic</code> umstellen</td>
+<td>ja</td>
+<td>wirkt ab dem nächsten Dokument</td>
+</tr>
+<tr>
+<td>Feld löschen</td>
+<td>nein</td>
+<td>nur über Reindex in einen neuen Index</td>
+</tr>
+<tr>
+<td>Analyzer in <code>settings.analysis</code> ergänzen</td>
+<td>ja, Index muss <strong>geschlossen</strong> sein</td>
+<td>Feld-Analyzer im Mapping bleibt trotzdem fix</td>
+</tr>
+<tr>
+<td><code>index.blocks.write</code> setzen / lösen</td>
+<td>ja</td>
+<td>dynamische Index-Einstellung, lösen mit <code>null</code></td>
+</tr>
+</tbody>
+</table>
+<p>Der Grund ist immer derselbe: Beim Indexieren entscheidet der Typ, wie der Wert in den invertierten Index oder in die Doc Values geschrieben wird. Bereits geschriebene Segmente sind unveränderlich.</p>
+<h3 id="dynamisch-oder-explizit">Dynamisch oder explizit?</h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th>Dynamic Mapping</th>
+<th>Explizites Mapping</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Definition</td>
+<td>automatisch beim ersten Dokument</td>
+<td>vorab beim Anlegen des Index</td>
+</tr>
+<tr>
+<td>Kontrolle</td>
+<td>OpenSearch rät anhand des JSON-Typs</td>
+<td>ihr entscheidet</td>
+</tr>
+<tr>
+<td>Typische Falle</td>
+<td>Zahlen und Booleans in Anführungszeichen werden <code>text</code></td>
+<td>keine, dafür Aufwand im Vorfeld</td>
+</tr>
+<tr>
+<td>Neue Felder</td>
+<td>erscheinen von selbst</td>
+<td>müssen ergänzt werden</td>
+</tr>
+<tr>
+<td>Passt zu</td>
+<td>Prototyp, Exploration, sauber typisiertes JSON</td>
+<td>Produktion, fremde Datenquellen, alles mit Aggregationen</td>
+</tr>
+</tbody>
+</table>
+<p>Dynamisches Mapping ist nicht per se falsch - es ist nur so gut wie das JSON, das ihr hineinschreibt.</p>
+<hr>
+<h2 id="tipps--ressourcen">Tipps &amp; Ressourcen</h2>
+<h3 id="vorgehen">Vorgehen</h3>
+<ul>
+<li>Mapping definieren, <strong>bevor</strong> die ersten Daten kommen. Danach wird es teuer</li>
+<li>Beim Import aus fremden Quellen zuerst ein paar Dokumente ansehen, dann das Mapping schreiben</li>
+<li>Multi-Field aus <code>text</code> und <code>keyword</code> ist der Standard für Textfelder, die man auch aggregieren will</li>
+<li>Nach jedem Import einmal <code>GET &lt;index&gt;/_mapping</code> - fremde Felder fallen so sofort auf</li>
+<li>Wer einen Analyzer wählt, sollte ihn mit <code>_analyze</code> an echtem Text prüfen, nicht am Beispiel aus der Doku</li>
+<li>Statische Settings: Index schließen, ändern, öffnen. Den Feldtyp ändert das nicht</li>
+<li>Write-Blocks mit <code>null</code> lösen, nicht nur auf <code>false</code> setzen</li>
+</ul>
+<h3 id="weiterführend">Weiterführend</h3>
+<ul>
+<li><a href="https://docs.opensearch.org/latest/mappings/">Mapping-Grundlagen</a></li>
+<li><a href="https://docs.opensearch.org/latest/mappings/supported-field-types/">Unterstützte Feldtypen</a></li>
+<li><a href="https://docs.opensearch.org/latest/mappings/mapping-parameters/">Mapping-Parameter</a></li>
+<li><a href="https://docs.opensearch.org/latest/mappings/mapping-parameters/dynamic/">dynamic-Parameter</a></li>
+<li><a href="https://docs.opensearch.org/latest/mappings/mapping-parameters/ignore-malformed/">ignore_malformed</a></li>
+<li><a href="https://docs.opensearch.org/latest/analyzers/">Analyzer im Überblick</a></li>
+<li><a href="https://docs.opensearch.org/latest/analyzers/language-analyzers/german/">German Analyzer</a></li>
+<li><a href="https://docs.opensearch.org/latest/api-reference/analyze-apis/">Analyze API</a></li>
+<li><a href="https://docs.opensearch.org/latest/install-and-configure/configuring-opensearch/index-settings/">Index-Einstellungen</a></li>
+<li><a href="https://docs.opensearch.org/latest/api-reference/index-apis/close-index/">Close Index</a></li>
+<li><a href="https://docs.opensearch.org/latest/api-reference/index-apis/open-index/">Open Index</a></li>
+<li><a href="https://docs.opensearch.org/latest/api-reference/document-apis/reindex/">Reindex API</a></li>
+<li><a href="https://docs.opensearch.org/latest/im-plugin/index-alias/">Index Aliases</a></li>
+</ul>
+
+</body>
+</html>
