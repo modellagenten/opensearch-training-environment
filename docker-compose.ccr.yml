@@ -1,11 +1,16 @@
+name: "modellagenten-ccr"
 # Cross-Cluster-Replication-Workshop (Uebung 10)
 #
 # Dieser Overlay ergaenzt den bestehenden 2-Node-Leader-Cluster um einen
 # eigenstaendigen Ein-Node-Follower-Cluster. Er gehoert fest zum Branch
-# "workshop-ccr" und wird NICHT ueber ein Compose-Profil, sondern als
-# zusaetzliche Compose-Datei gestartet:
+# "workshop-ccr" und wird als eigenstaendiges Compose-Projekt gestartet,
+# NACHDEM der Leader-Cluster bereits laeuft:
 #
-#   docker compose -f docker-compose.yml -f docker-compose.ccr.yml up -d
+#   docker compose up -d                          # Leader (Projekt "modellagenten")
+#   docker compose -f docker-compose.ccr.yml up -d  # Follower (Projekt "modellagenten-ccr")
+#
+# Der Follower haengt sich ueber das bereits vom Leader erstellte, externe
+# Netzwerk "modellagenten_opensearch-net" an (siehe networks-Block unten).
 #
 # Beide Cluster teilen sich das Netzwerk "opensearch-net" und dasselbe
 # gebaute Image (Dockerfile). Weil das Image die identische Demo-Security-
@@ -60,3 +65,11 @@ services:
 
 volumes:
   opensearch-follower-data:
+
+networks:
+  # Bereits vom Leader-Projekt "modellagenten" erstelltes Netzwerk. Der
+  # Follower haengt sich als externes Netzwerk daran, damit sich Leader und
+  # Follower auf der Transport-Ebene (Port 9300) erreichen koennen.
+  opensearch-net:
+    external: true
+    name: modellagenten_opensearch-net
